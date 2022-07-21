@@ -1,0 +1,17 @@
+CREATE TABLE trades( transaction_id SERIAL PRIMARY KEY, 
+ transaction_date DATATYPE VARCHAR(15),
+ disclosure_date DATATYPE VARCHAR(15),
+ owner DATATYPE VARCHAR(15),
+ticker DATATYPE VARCHAR(15),
+asset_description DATATYPE VARCHAR(255),
+asset_type DATATYPE VARCHAR(55),
+type DATATYPE VARCHAR(50),
+amount DATATYPE VARCHAR(50),
+comment DATATYPE VARCHAR(100),
+senator DATATYPE VARCHAR(100),
+ 
+   );
+
+
+
+
