@@ -22,17 +22,30 @@ app.get("/trades", async (req, res) => {
 
     const requestQuery = req.query;
 
-    const column = Object.keys(requestQuery).pop();
-    const value = Object.values(requestQuery).pop();
+    console.log("query is", requestQuery);
 
-    if (typeof column !== "undefined") {
-      const filterCriteria = ` WHERE ${column}=$1`;
+    const columns = Object.keys(requestQuery);
+    const values = Object.values(requestQuery);
+
+    if (columns.length !== 0) {
+      let currentColumn = columns.pop();
+      let currentValue = values.pop();
+
+      let filterCriteria = ` WHERE ${currentColumn}=${currentValue}`;
+
+      while (columns.length >= 1) {
+        let columnCounter = 2;
+        let currentColumn = columns.pop();
+        let currentValue = values.pop();
+
+        filterCriteria =
+          filterCriteria += `and ${currentColumn}=${currentValue}`;
+      }
 
       queryString += filterCriteria;
-      matches = await pool.query(queryString, [value]);
-    } else {
-      matches = await pool.query(queryString);
     }
+
+    matches = await pool.query(queryString);
 
     res.json(matches.rows);
   } catch (error) {
