@@ -41,6 +41,10 @@ ALTER TABLE trades ADD COLUMN transaction_id SERIAL PRIMARY KEY;
 
 
 
+SELECT * FROM trades where amount= '$1,001 - $15,000' and senator='Debra S Fischer' limit 10;
+-- SELECT * FROM trades WHERE amount = '$1,001 - $15,000' limit 10;
+
+
 
 
 

@@ -34,7 +34,6 @@ app.get("/trades", async (req, res) => {
       let filterCriteria = ` WHERE ${currentColumn}=${currentValue}`;
 
       while (columns.length >= 1) {
-        let columnCounter = 2;
         let currentColumn = columns.pop();
         let currentValue = values.pop();
 
