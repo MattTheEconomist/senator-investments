@@ -1,16 +1,14 @@
 import React from "react";
+import { useState } from "react";
 
-const TableHeader = ({
-  headerText,
-  columnValue,
-  reOrderByHeader,
-  stateData,
-}) => {
-  let tableAscending = true;
+const TableHeader = ({ headerText, columnValue, reOrderByHeader }) => {
+  const [isAscending, setIsAscending] = useState(true);
+  // let tableAscending = true;
 
   function orderTable() {
-    console.log("clicked");
-    reOrderByHeader(columnValue, true);
+    // console.log("from header", columnValue);
+    setIsAscending(!isAscending);
+    reOrderByHeader(columnValue, isAscending);
   }
 
   return (

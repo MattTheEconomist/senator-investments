@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import TableHeader from "./TradesTableHeader";
+import TableRows from "./TableRows";
 
 const TradesTable = ({ tradeData, isFetching }) => {
-  const [stateData, setStateData] = useState([]);
+  const [tradeDataOrdered, setTradeDataOrdered] = useState([]);
+  const [reorderTrigger, setReorderTrigger] = useState(false);
+
+  useEffect(() => {
+    setTradeDataOrdered(tradeData);
+    // console.log(isFetching);
+    console.log("from trades table", tradeDataOrdered);
+    setReorderTrigger(false);
+  }, [isFetching, tradeData, reorderTrigger]);
+  // }, []);
 
   function reOrderByHeader(header, isAscending) {
-    // console.log("reorder triggered");
+    setReorderTrigger(true);
+
     if (!tradeData) {
       return null;
     }
@@ -43,28 +54,21 @@ const TradesTable = ({ tradeData, isFetching }) => {
       );
     }
 
-    setStateData(rez);
+    console.log("reordered func", rez);
+    // setSortTriggered(false);
+    setTradeDataOrdered(rez);
+    // return rez;
   }
+
+  // tableRows = orderTradeTableRows(tradeDataOrdered);
+  // let tableRows = orderTradeTableRows(tradeDataOrdered);
 
   // console.log(reOrderByHeader("amount", "ascending"));
   // console.log(reOrderByHeader("ticker", false));
   // console.log(reOrderByHeader("transaction_date", true));
   // console.log(reOrderByHeader("type", true));
 
-  const tableRows = tradeData.map((el, i) => {
-    if (isFetching) {
-      return <h2>FETCHING</h2>;
-    }
-    return (
-      <tr key={`row${i}`}>
-        <td key={`date${i}`}>{el.transaction_date}</td>
-        <td key={`transType${i}`}>{el.type}</td>
-        <td key={`ticker${i}`}>{el.ticker}</td>
-        <td key={`amount${i}`}>{el.amount}</td>
-        <td key={`options${i}`}>options </td>
-      </tr>
-    );
-  });
+  // const tableRows = tradeData.map((el, i) => {
 
   const tableHeaderList = [
     {
@@ -113,7 +117,13 @@ const TradesTable = ({ tradeData, isFetching }) => {
             {tableHeaders}
           </tr>
         </thead>
-        <tbody>{tableRows}</tbody>
+        <tbody>
+          <TableRows
+            isFetching={isFetching}
+            tradeDataOrdered={tradeDataOrdered}
+          />
+          {/* {tableRows} */}
+        </tbody>
       </table>
     </>
 
