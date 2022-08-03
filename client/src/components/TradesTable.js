@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import TableHeader from "./TradesTableHeader";
-import TableRows from "./TableRows";
+import AllTableRows from "./AllTableRows";
 
 const TradesTable = ({ tradeData, isFetching }) => {
   const [tradeDataOrdered, setTradeDataOrdered] = useState([]);
@@ -9,8 +9,6 @@ const TradesTable = ({ tradeData, isFetching }) => {
 
   useEffect(() => {
     setTradeDataOrdered(tradeData);
-    // console.log(isFetching);
-    console.log("from trades table", tradeDataOrdered);
     setReorderTrigger(false);
   }, [isFetching, tradeData, reorderTrigger]);
   // }, []);
@@ -38,8 +36,11 @@ const TradesTable = ({ tradeData, isFetching }) => {
     }
     if (header === "ticker") {
       function replaceUnknown(symbol) {
-        symbol === "--" ? (symbol = "zzzzzzz") : (symbol = symbol);
-        return symbol;
+        let outputSymbol = symbol;
+        if (symbol === "--") {
+          outputSymbol = "zzzzzzz";
+        }
+        return outputSymbol;
       }
       rez = tradeData.sort((a, b) =>
         replaceUnknown(a[header]) < replaceUnknown(b[header])
@@ -54,21 +55,29 @@ const TradesTable = ({ tradeData, isFetching }) => {
       );
     }
 
-    console.log("reordered func", rez);
-    // setSortTriggered(false);
+    if (header === "amount") {
+      function transformNumber(amountRange) {
+        if (amountRange === "Unknown") {
+          return "zzzzzzzz";
+        }
+        const firstNumString = amountRange
+          .split("-")[0]
+          .trim()
+          .replace(",", "")
+          .replace("$", "");
+        const firstNumInt = parseInt(firstNumString);
+        return firstNumInt;
+      }
+
+      rez = tradeData.sort((a, b) =>
+        transformNumber(a[header]) < transformNumber(b[header])
+          ? firstReturn
+          : secondReturn
+      );
+    }
+
     setTradeDataOrdered(rez);
-    // return rez;
   }
-
-  // tableRows = orderTradeTableRows(tradeDataOrdered);
-  // let tableRows = orderTradeTableRows(tradeDataOrdered);
-
-  // console.log(reOrderByHeader("amount", "ascending"));
-  // console.log(reOrderByHeader("ticker", false));
-  // console.log(reOrderByHeader("transaction_date", true));
-  // console.log(reOrderByHeader("type", true));
-
-  // const tableRows = tradeData.map((el, i) => {
 
   const tableHeaderList = [
     {
@@ -87,10 +96,6 @@ const TradesTable = ({ tradeData, isFetching }) => {
       headerText: "Amount",
       columnValue: "amount",
     },
-    {
-      headerText: "Options",
-      columnValue: false,
-    },
   ];
 
   const tableHeaders = tableHeaderList.map((el, i) => {
@@ -106,25 +111,29 @@ const TradesTable = ({ tradeData, isFetching }) => {
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            {/* <th>Date</th>
-          <th>Transaction Type</th>
-          <th>Ticker</th>
-          <th>Amount</th>
-          <th>Options</th> */}
-            {tableHeaders}
-          </tr>
-        </thead>
-        <tbody>
-          <TableRows
+      <div id="fullTradesTable">
+        <div id="tradesTableHeaders">{tableHeaders}</div>
+        <div id="allTradeTableRows">
+          <AllTableRows
             isFetching={isFetching}
             tradeDataOrdered={tradeDataOrdered}
+            reorderTrigger={reorderTrigger}
           />
-          {/* {tableRows} */}
+        </div>
+      </div>
+      {/* <table>
+        <thead>
+          <tr>{tableHeaders}</tr>
+        </thead>
+        <tbody>
+          <AllTableRows
+            isFetching={isFetching}
+            tradeDataOrdered={tradeDataOrdered}
+            reorderTrigger={reorderTrigger}
+          />
+          {tableRows}
         </tbody>
-      </table>
+      </table> */}
     </>
 
     // <>

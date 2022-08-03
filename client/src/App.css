@@ -11,6 +11,46 @@
 }
 
 
+/* trades table */
+
+:root{
+  --cellWidth: 150px; 
+}
+
+#tradesTableHeaders{
+  display: table;
+    /* width: 500px; Optional */
+
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+    /* background-color: red; Optional */
+}
+.tradeTableHeader{
+  display: table-cell;
+  width:var(--cellWidth); 
+}
+
+
+.singleTableRow{
+  display: table;
+  table-layout: fixed; /*Optional*/
+
+}
+
+.tradesTableCell{
+  width:var(--cellWidth); 
+  display: table-cell;
+}
+
+
+
+
+
+#shadedRow{
+  background-color: rgb(158, 153, 153);
+}
+
+
 
 
 

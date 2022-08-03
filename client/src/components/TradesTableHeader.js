@@ -12,13 +12,13 @@ const TableHeader = ({ headerText, columnValue, reOrderByHeader }) => {
   }
 
   return (
-    <th>
+    <div className="tradeTableHeader">
       {headerText}
       {/* <input type="button">Ord</input> */}
       {/* <input>Ord</input> */}
       {/* <p>test</p> */}
       <button onClick={orderTable}>ord</button>
-    </th>
+    </div>
   );
 };
 
