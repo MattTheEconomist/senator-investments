@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import TradesTable from "./TradesTable";
+import TradesTable from "./Trades_Table/TradesTable";
 import NameDropdown from "./NameDropdown";
 
 // const promise = fetchSenatorData(senatorName);

@@ -42,12 +42,12 @@
   display: table-cell;
 }
 
-
-
-
-
 #shadedRow{
   background-color: rgb(158, 153, 153);
+}
+
+#stockGraphContainer{
+  color: red
 }
 
 

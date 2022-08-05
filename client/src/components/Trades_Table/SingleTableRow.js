@@ -29,7 +29,7 @@ const SingleTableRow = ({
         onMouseOver={() => onMouseHover(sequence)}
         onMouseLeave={() => onMouseLeave(sequence)}
         id={isHovering ? "shadedRow" : `row${sequence}`}
-        className={"singleTableRow"}
+        className="singleTableRow"
       >
         <div key={`date${sequence}`} className="tradesTableCell">
           {rowData.transaction_date}
