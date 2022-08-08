@@ -1,58 +1,83 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const StockGraphTimeSeries = ({
-  rawStockData,
-  isFetching,
-  transaction_date,
-}) => {
-  const formattedData = formatStockData(rawStockData, transaction_date);
+const StockGraphTimeSeries = ({ stockData, transaction_date }) => {
+  // async function processStockData(stockData) {
 
-  console.log("stock graph ", formattedData);
+  const transactionDateFormatted = new Date(transaction_date);
 
-  //   const [isFetching, setIsFetching] = useState(false);
-  //   const [formattedData, setFormattedData] = useState([]);
+  function processStockData(stockData) {
+    console.log(stockData);
 
-  //   const ticker = rowData.ticker;
-  //   const transactionDate = rowData.transactionDate;
+    const isEmpty = JSON.stringify(stockData) === "{}" ? true : false;
 
-  //   useEffect(() => {
-  //     raw = fetchStockData(ticker);
-  //   }, []);
+    if (!isEmpty) {
+      const noLength = Object.keys(stockData).length === 0 ? true : false;
 
-  //   useEffect(() => {
-  //     formatted = setFormattedData(raw);
-  //   }, [isFetching]);
+      if (noLength) {
+        console.log("stock graph", "this HAPPEND");
+        return "array empty ";
+      }
 
-  //   const apiKey = "U288LAEMR485UKD1";
+      const weeklyData = stockData["Weekly Time Series"];
+      const allDates = Object.keys(weeklyData);
 
-  //   let raw = [];
-  //   let formatted = [];
+      const datesArrayFull = Object.keys(weeklyData)
+        .map((date) => {
+          return { date: date, close: weeklyData[date]["4. close"] };
+        })
+        .sort((a, b) => (a.date > b.date ? 1 : -1));
 
-  //   async function fetchStockData(tick) {
-  //     setIsFetching(true);
+      // const indexOfDate = datesArrayFull.findIndex((row, i) => {
+      //   return row.date === transaction_date;
+      // });
 
-  //     const endpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${tick}&apikey=${apiKey}`;
+      const datesIdentifier = datesArrayFull.map((row) => {
+        const rowDate = new Date(row.date);
+        let appendedValue = 0;
+        if (rowDate > transactionDateFormatted) {
+          appendedValue = 1;
+        }
+        return appendedValue;
+      });
 
-  //     try {
-  //       const res = await fetch(endpoint);
-  //       const json = await res.json();
-  //       //   console.log(json);
-  //       return json;
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //     setIsFetching(false);
-  //   }
+      const indexOfDate = datesIdentifier.indexOf(1);
 
-  function formatStockData(rawData, transactionDate) {
-    const weeklyData = rawData["Weekly Time Series"];
-    //   console.log(weeklyData);
-    return weeklyData;
+      const lowerRange = indexOfDate - 4;
+      const upperRange = indexOfDate + 16;
+
+      const datesArrayFiltered = datesArrayFull.slice(lowerRange, upperRange);
+
+      // const daysAfter = datesArrayFull.filter((row) => {
+
+      //   return rowDate > transactionDateFormatted;
+      // });
+
+      // const daysBefore = datesArrayFull.filter((row) => {
+      //   const rowDate = new Date(row.date);
+      //   return rowDate < transactionDateFormatted;
+      // });
+
+      const rez = datesArrayFiltered;
+      // const rez = indexOfDate;
+      // const rez = daysBefore;
+      // const rez = datesArrayFull;
+      // const rez = transaction_date;
+
+      return JSON.stringify(rez);
+    }
+    return "no data";
   }
+
+  // const stockoutput = stockData
+  //   ? JSON.stringify(processStockData(stockData))
+  //   : "no data here";
+
+  const stockOutput = processStockData(stockData);
 
   return (
     <div id="stockGraphContainer">
-      <div key={Math.random()}>stock grph bro</div>
+      <h3>{transaction_date}</h3>
+      <div key={Math.random()}>{stockOutput}</div>
     </div>
   );
 };

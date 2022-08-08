@@ -7,11 +7,13 @@ const SingleTableRow = ({
   rowData,
   rowSequenceClicked,
   identifyRowClicked,
+  stockData,
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
   function rowExpansion(i) {
     identifyRowClicked(sequence);
+    // console.log("single row", stockData);
   }
 
   function onMouseHover(i) {
@@ -49,6 +51,7 @@ const SingleTableRow = ({
         sequence={sequence}
         rowData={rowData}
         rowSequenceClicked={rowSequenceClicked}
+        stockData={stockData}
       />
     </>
   );

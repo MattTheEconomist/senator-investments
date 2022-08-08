@@ -2,14 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import StockGraphTimeSeries from "./StockGraph_timeSeries";
 
-const RowExpansion = ({ sequence, rowData, rowSequenceClicked }) => {
+const RowExpansion = ({ stockData, sequence, rowData, rowSequenceClicked }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [rawStockData, setRawStockData] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
-
-  useEffect(() => {
-    setRawStockData(fetchStockData(rowData.ticker));
-  }, []);
 
   useEffect(() => {
     if (rowSequenceClicked === sequence) {
@@ -17,7 +11,7 @@ const RowExpansion = ({ sequence, rowData, rowSequenceClicked }) => {
     } else {
       setIsExpanded(false);
     }
-  }, [rowSequenceClicked, sequence, rowData]);
+  }, [rowSequenceClicked, sequence]);
 
   const transaction_date = rowData.transaction_date;
 
@@ -31,29 +25,11 @@ const RowExpansion = ({ sequence, rowData, rowSequenceClicked }) => {
   };
 
   const cardListItems = Object.keys(infoColsObj).map((col, idx) => (
-    // <li id={`cardListItem${idx}`}>
     <li key={`cardListItem${idx}`}>
       {`${infoColsObj[col]}: `}
       {rowData[col]}
     </li>
   ));
-
-  async function fetchStockData(tick) {
-    setIsFetching(true);
-
-    const apiKey = "U288LAEMR485UKD1";
-    const endpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${tick}&apikey=${apiKey}`;
-
-    try {
-      const res = await fetch(endpoint);
-      const json = await res.json();
-      //   console.log(json);
-      return json;
-    } catch (error) {
-      console.error(error);
-    }
-    setIsFetching(false);
-  }
 
   const expansionDiv = isExpanded ? (
     <div id="expansionDiv">
@@ -62,8 +38,8 @@ const RowExpansion = ({ sequence, rowData, rowSequenceClicked }) => {
       </div>
       <StockGraphTimeSeries
         transaction_date={transaction_date}
-        rawStockData={rawStockData}
-        isFetching={isFetching}
+        // rawStockData={rawStockData}
+        stockData={stockData}
       />
     </div>
   ) : (
