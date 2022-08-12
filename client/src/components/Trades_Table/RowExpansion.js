@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import StockGraphTimeSeries from "./StockGraph_timeSeries";
 import StockGraphSvg from "./StockGraphSvg";
 
 const RowExpansion = ({ stockData, sequence, rowData, rowSequenceClicked }) => {

@@ -15,6 +15,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
     if (rowSequenceClicked !== -2) {
       const tradesRow = tradeDataOrdered[rowSequenceClicked];
       const ticker = tradesRow.ticker;
+
       fetchStockData(ticker);
     }
   }, [rowSequenceClicked]);
@@ -27,19 +28,25 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 
   async function fetchStockData(tick) {
     const endpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${tick}&apikey=${apiKey}`;
-    setIsFetchingStockData(true);
+
     try {
+      setIsFetchingStockData(true);
       const res = await fetch(endpoint);
       const json = await res.json();
-      // console.log(" all table rows", json);
-      // console.log("FETCH TRIGGERED");
-      setStockData(json);
+      if (Object.keys(json))
+        // console.log(" all table rows", json);
+        // console.log("FETCH TRIGGERED");
+        setStockData(json);
       setIsFetchingStockData(false);
       // return json;
     } catch (error) {
       console.error(error);
     }
   }
+
+  // https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=--&apikey=U288LAEMR485UKD1
+
+  // https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=ACE&apikey=U288LAEMR485UKD1
 
   return (
     <>

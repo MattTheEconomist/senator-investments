@@ -4,11 +4,6 @@ import { useRef } from "react";
 import { processStockData } from "../../Utilities/TimeDataFormating";
 
 const StockGraphSvg = ({ stockData, transaction_date }) => {
-  // useEffect(() => {
-  //   // const svgEl = d3.select(svgRef.current);
-  //   // svgEl.selectAll("*").remove();
-  // }, [transaction_date]);
-
   const dimensions = {
     width: 600,
     height: 300,
@@ -21,89 +16,100 @@ const StockGraphSvg = ({ stockData, transaction_date }) => {
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
 
-  const blankReturn = (
-    <text x="0" y="50" font-family="Verdana" fontSize={"20"} fill="blue">
-      fetching data
-    </text>
-  );
+  function textElement(text) {
+    return (
+      <text x="0" y="50" fontFamily="Verdana" fontSize={"20"} fill="blue">
+        {text}
+      </text>
+    );
+  }
 
   function drawGraph(stockData) {
-    if (stockData.length < 1) {
-      return blankReturn;
-    }
-
-    // const timeParser = d3.timeParse("%Y-%m-%d");
-
-    const fakeData = processStockData(stockData, transaction_date);
-
-    // return (
-    //   <text x="50" y="50" fontFamily="Verdana" fontSize={"20"} fill="blue">
-    //     {JSON.stringify(fakeData)}
-    //   </text>
-    // );
-
-    // return JSON.stringify(fakeData);
-
-    const dates = fakeData.map((row) => row.date);
-    const values = fakeData.map((row) => row.close);
-
     const svgEl = d3.select(svgRef.current);
 
     if (svgEl) {
       svgEl.selectAll("*").remove();
     }
 
-    const svg = svgEl
-      .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
+    if (stockData.length < 1) {
+      return textElement("Fetching Data . . .");
+    }
 
-    const xScale = d3
-      .scaleTime()
-      .domain(d3.extent(dates))
-      .range([margin.left, svgWidth - margin.right]);
+    const formattedData = processStockData(stockData, transaction_date);
 
-    const xAxis = d3.axisBottom(xScale).ticks(10).tickSize(10);
+    console.log("stock graph svg", formattedData);
+    // if (formattedData.length < 1) {
 
-    const xAxisGroup = svg
-      .append("g")
-      .attr("transform", `translate(0, ${height - margin.bottom})`)
-      .call(xAxis);
+    if (formattedData === "no data") {
+      d3.select("svg")
+        .append("text")
+        .text("no data stock price. . .")
+        .attr("x", 50)
+        .attr("y", 50);
+    } else {
+      const dates = formattedData.map((row) => row.date);
+      const values = formattedData.map((row) => row.close);
 
-    xAxisGroup.selectAll("line").attr("stroke", "black");
-    xAxisGroup.selectAll("text").attr("font-size", "0.75rem");
+      const svg = svgEl
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const yScale = d3
-      .scaleLinear()
-      .domain(d3.extent(values))
-      .range([height, 0]);
+      const xScale = d3
+        .scaleTime()
+        .domain(d3.extent(dates))
+        // .range([margin.left, svgWidth - margin.right]);
+        .range([margin.left, svgWidth - margin.right]);
 
-    const yAxis = d3.axisLeft(yScale).ticks(5).tickSize(10);
-    const yAxisGroup = svg.append("g").call(yAxis);
-    yAxisGroup.select(".domain").remove();
-    yAxisGroup.selectAll("line").attr("stroke", "black");
-    yAxisGroup
-      .selectAll("text")
-      .attr("color", "black")
-      .attr("font-size", "0.75rem");
+      const xAxis = d3.axisBottom(xScale).ticks(10).tickSize(10);
 
-    const line = d3
-      .line()
-      .x((d) => xScale(d.date))
-      .y((d) => yScale(d.close));
+      const xAxisGroup = svg
+        .append("g")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(xAxis);
 
-    d3.select("svg")
-      .append("path") // add a path to the existing svg
-      .datum(fakeData)
-      .attr("d", line)
-      .attr("fill", "none")
-      .attr("stroke", "black")
-      .attr("stroke-width", 3);
+      xAxisGroup.selectAll("line").attr("stroke", "black");
+      xAxisGroup.selectAll("text").attr("font-size", "0.75rem");
+
+      const yScale = d3
+        .scaleLinear()
+        .domain(d3.extent(values))
+        .range([height, 0]);
+
+      const yAxis = d3.axisLeft(yScale).ticks(5).tickSize(8);
+      const yAxisGroup = svg
+        .append("g")
+        .call(yAxis)
+        .attr("transform", `translate(${margin.left - 10}, -${margin.top})`);
+
+      yAxisGroup.select(".domain").remove();
+      yAxisGroup.selectAll("line").attr("stroke", "black");
+      yAxisGroup
+        .selectAll("text")
+        .attr("color", "black")
+        .attr("font-size", "0.75rem");
+
+      const line = d3
+        .line()
+        // .x((d) => xScale(d.date))
+        .x((d) => xScale(d.date) + margin.left)
+        .y((d) => yScale(d.close));
+
+      d3.select("svg")
+        .append("path") // add a path to the existing svg
+        .datum(formattedData)
+        .attr("d", line)
+        .attr("fill", "none")
+        .attr("stroke", "black")
+        .attr("stroke-width", 3);
+    }
   }
 
-  const svgGraph = stockData.length < 1 ? blankReturn : drawGraph(stockData);
+  const svgGraph =
+    stockData.length < 1 ? textElement("Fetching") : drawGraph(stockData);
 
   return (
     <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg">
+      {/* {svgGraph} */}
       {/* {svgGraph} */}
     </svg>
   );
