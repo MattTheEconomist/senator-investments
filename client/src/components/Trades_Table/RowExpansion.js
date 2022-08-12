@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import StockGraphTimeSeries from "./StockGraph_timeSeries";
+import StockGraphSvg from "./StockGraphSvg";
 
 const RowExpansion = ({ stockData, sequence, rowData, rowSequenceClicked }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -36,9 +37,13 @@ const RowExpansion = ({ stockData, sequence, rowData, rowSequenceClicked }) => {
       <div id="criticalInfoCard">
         <ul id="yo">{cardListItems}</ul>
       </div>
-      <StockGraphTimeSeries
+      {/* <StockGraphTimeSeries
         transaction_date={transaction_date}
         // rawStockData={rawStockData}
+        stockData={stockData}
+      /> */}
+      <StockGraphSvg
+        transaction_date={transaction_date}
         stockData={stockData}
       />
     </div>

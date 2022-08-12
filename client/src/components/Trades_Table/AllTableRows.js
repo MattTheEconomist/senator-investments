@@ -15,15 +15,9 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
     if (rowSequenceClicked !== -2) {
       const tradesRow = tradeDataOrdered[rowSequenceClicked];
       const ticker = tradesRow.ticker;
-      // setIsFetchingStockData(true);
       fetchStockData(ticker);
-      // setIsFetchingStockData(false);
     }
   }, [rowSequenceClicked]);
-
-  useEffect(() => {
-    console.log(" all table rows", stockData);
-  }, [isFetchingStockData]);
 
   function identifyRowClicked(seq) {
     setRowSequenceClicked(seq);
@@ -38,7 +32,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
       const res = await fetch(endpoint);
       const json = await res.json();
       // console.log(" all table rows", json);
-      console.log("FETCH TRIGGERED");
+      // console.log("FETCH TRIGGERED");
       setStockData(json);
       setIsFetchingStockData(false);
       // return json;

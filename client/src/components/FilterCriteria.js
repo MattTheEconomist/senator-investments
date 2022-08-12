@@ -26,7 +26,7 @@ const FilterCriteria = () => {
   const onSelect = async (e) => {
     const amountSelected = e.target.value;
     const column = "amount";
-    console.log("fetching", amountSelected);
+    // console.log("fetching", amountSelected);
 
     e.preventDefault();
 
@@ -38,7 +38,7 @@ const FilterCriteria = () => {
 
       const response = await fetch(fetchString);
       const jsonData = await response.json();
-      console.log(jsonData);
+      // console.log(jsonData);
     } catch (error) {
       console.error(error);
     }
