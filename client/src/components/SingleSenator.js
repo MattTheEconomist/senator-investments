@@ -17,7 +17,7 @@ const SingleSenator = () => {
   async function fetchSenatorData(senatorNameFetch) {
     setIsFetching(true);
     try {
-      const fetchString = `http://localhost:5000/trades?senator=${senatorNameFetch}`;
+      const fetchString = `http://localhost:5001/trades?senator=${senatorNameFetch}`;
       const response = await fetch(fetchString);
       const jsonData = await response.json();
       // console.log(jsonData);

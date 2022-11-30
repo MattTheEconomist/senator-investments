@@ -16,7 +16,7 @@ app.use(express.json());
 //trade query
 app.get("/trades", async (req, res) => {
   try {
-    let queryString = "SELECT * from trades";
+    let queryString = "SELECT * from transactions";
 
     let matches = [];
 
@@ -58,7 +58,7 @@ app.get("/trades/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const thisTrade = await pool.query(
-      "SELECT * from trades WHERE transaction_id=$1",
+      "SELECT * from transactions WHERE transaction_id=$1",
       [id]
     );
     res.json(thisTrade.rows);
@@ -67,7 +67,7 @@ app.get("/trades/:id", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = 5001;
 
 app.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);

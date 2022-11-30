@@ -109,6 +109,8 @@ const TradesTable = ({ tradeData, isFetching }) => {
     );
   });
 
+  // console.log("from trades table file")
+
   return (
     <>
       <div id="fullTradesTable">
