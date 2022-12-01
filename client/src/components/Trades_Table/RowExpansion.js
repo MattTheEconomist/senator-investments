@@ -2,8 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import StockGraphSvg from "./StockGraphSvg";
 
-const RowExpansion = ({ stockData, sequence, rowData, rowSequenceClicked }) => {
+const RowExpansion = ({ stockData, 
+  stockDataNEW,
+  sequence, rowData, rowSequenceClicked }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
 
   useEffect(() => {
     if (rowSequenceClicked === sequence) {
@@ -44,6 +47,7 @@ const RowExpansion = ({ stockData, sequence, rowData, rowSequenceClicked }) => {
       <StockGraphSvg
         transaction_date={transaction_date}
         stockData={stockData}
+        stockDataNEW = {stockDataNEW}
       />
     </div>
   ) : (

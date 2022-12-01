@@ -95,7 +95,7 @@ app.get("/historical/:ticker", async (req, res) => {
 
 
     // let queryString = "SELECT * from transactions";
-    let queryString = `SELECT "date", "SPY", "${ticker}" from ${tableName}`
+    let queryString = `SELECT "date", "SPY", "${ticker}" from ${tableName} order by "date"`
 
     let matches = [];
 

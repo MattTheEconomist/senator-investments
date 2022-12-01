@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import * as d3 from "d3";
 import { useRef } from "react";
-import { processStockData } from "../../Utilities/TimeDataFormating";
+import { processStockData, processStockDataNEW } from "../../Utilities/TimeDataFormating";
 
-const StockGraphSvg = ({ stockData, transaction_date }) => {
+const StockGraphSvg = ({ stockData, transaction_date ,
+  stockDataNEW}) => {
+
+  console.log("stock graph transaction date prop", transaction_date)
   const dimensions = {
     width: 600,
     height: 300,
@@ -37,8 +40,11 @@ const StockGraphSvg = ({ stockData, transaction_date }) => {
 
     const formattedData = processStockData(stockData, transaction_date);
 
-    console.log("stock graph svg", formattedData);
-    // if (formattedData.length < 1) {
+    const formattedDataNEW = processStockDataNEW(stockDataNEW, transaction_date)
+    console.log('stock graph formatted data new ', formattedDataNEW)
+
+    //  console.log("stock graph svg", formattedData);
+
 
     if (formattedData === "no data") {
       d3.select("svg")

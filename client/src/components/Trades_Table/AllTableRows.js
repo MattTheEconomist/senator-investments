@@ -6,6 +6,8 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   const [rowSequenceClicked, setRowSequenceClicked] = useState(-2);
   const [stockData, setStockData] = useState([]);
   const [isFetchingStockData, setIsFetchingStockData] = useState(false);
+  const [stockDataNEW, setStockDataNEW] = useState([]);
+  const [isFetchingStockDataNEW, setIsFetchingStockDataNEW] = useState(false);
 
   useEffect(() => {
     setRowSequenceClicked(-2);
@@ -17,7 +19,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
       const ticker = tradesRow.ticker;
 
       fetchStockDataNEW(ticker);
-      // fetchStockData(ticker);
+      fetchStockData(ticker);
     }
   }, [rowSequenceClicked]);
 
@@ -54,8 +56,8 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
         const json = await res.json();
         // console.log(jsonData);
         if (Object.keys(json))
-            setStockData(json);
-          setIsFetchingStockData(false);
+            setStockDataNEW(json);
+          setIsFetchingStockDataNEW(false);
       } catch (error) {
         console.error(error);
       }
@@ -92,6 +94,8 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
             identifyRowClicked={identifyRowClicked}
             key={`singleRow${sequence}`}
             stockData={stockData}
+            stockDataNEW = {stockDataNEW}
+            isFetchingStockDataNEW = {isFetchingStockDataNEW}
           />
         ))
       )}

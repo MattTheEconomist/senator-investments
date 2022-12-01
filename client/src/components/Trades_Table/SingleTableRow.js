@@ -8,6 +8,8 @@ const SingleTableRow = ({
   rowSequenceClicked,
   identifyRowClicked,
   stockData,
+  stockDataNEW, 
+  isFetchingStockDataNEW
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -52,6 +54,8 @@ const SingleTableRow = ({
         rowData={rowData}
         rowSequenceClicked={rowSequenceClicked}
         stockData={stockData}
+        stockDataNEW = {stockDataNEW}
+        isFetchingStockDataNEW = {isFetchingStockDataNEW}
       />
     </>
   );
