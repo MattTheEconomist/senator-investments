@@ -6,8 +6,6 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   const [rowSequenceClicked, setRowSequenceClicked] = useState(-2);
   const [stockData, setStockData] = useState([]);
   const [isFetchingStockData, setIsFetchingStockData] = useState(false);
-  const [stockDataNEW, setStockDataNEW] = useState([]);
-  const [isFetchingStockDataNEW, setIsFetchingStockDataNEW] = useState(false);
 
   useEffect(() => {
     setRowSequenceClicked(-2);
@@ -19,32 +17,11 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
       const ticker = tradesRow.ticker;
 
       fetchStockDataNEW(ticker);
-      fetchStockData(ticker);
     }
   }, [rowSequenceClicked]);
 
   function identifyRowClicked(seq) {
     setRowSequenceClicked(seq);
-  }
-
-  const apiKey = "U288LAEMR485UKD1";
-
-  async function fetchStockData(tick) {
-    const endpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=${tick}&apikey=${apiKey}`;
-
-    try {
-      setIsFetchingStockData(true);
-      const res = await fetch(endpoint);
-      const json = await res.json();
-      if (Object.keys(json))
-        // console.log(" all table rows", json);
-        // console.log("FETCH TRIGGERED");
-        setStockData(json);
-      setIsFetchingStockData(false);
-      // return json;
-    } catch (error) {
-      console.error(error);
-    }
   }
 
 
@@ -54,10 +31,9 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
         const endpoint = `http://localhost:5001/historical/${ticker}`;
         const res = await fetch(endpoint);
         const json = await res.json();
-        // console.log(jsonData);
         if (Object.keys(json))
-            setStockDataNEW(json);
-          setIsFetchingStockDataNEW(false);
+            setStockData(json);
+          setIsFetchingStockData(false);
       } catch (error) {
         console.error(error);
       }
@@ -93,9 +69,8 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
             rowSequenceClicked={rowSequenceClicked}
             identifyRowClicked={identifyRowClicked}
             key={`singleRow${sequence}`}
-            stockData={stockData}
-            stockDataNEW = {stockDataNEW}
-            isFetchingStockDataNEW = {isFetchingStockDataNEW}
+            stockData = {stockData}
+            isFetchingStockData = {isFetchingStockData}
           />
         ))
       )}
