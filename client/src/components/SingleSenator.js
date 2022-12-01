@@ -9,12 +9,9 @@ const SingleSenator = () => {
   const [senatorData, setSenatorData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
 
-  // useEffect(() => {
-  //   fetchSenatorData("Sheldon Whitehouse");
-  //   console.log("wtf");
-  // }, []);
 
   async function fetchSenatorData(senatorNameFetch) {
+    console.log(senatorNameFetch)
     setIsFetching(true);
     try {
       const fetchString = `http://localhost:5001/trades?senator=${senatorNameFetch}`;

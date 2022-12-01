@@ -72,3 +72,62 @@ const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);
 });
+
+
+// get historical prices
+
+app.get("/historical/:ticker", async (req, res) => {
+  try {
+    const {ticker} = req.params; 
+
+    leadingLetter = ticker.charAt(0)
+    tableName ='"historical_pricesA_G"'
+
+    if ('ABCDEFG'.includes(leadingLetter)){
+      tableName ='"historical_pricesA_G"'
+    }
+    if ('HIJKLMNOPQR'.includes(leadingLetter)){
+      tableName ='"historical_pricesH_R"'
+    }
+    if ('STUVWXYZ'.includes(leadingLetter)){
+      tableName ='"historical_pricesS_Z"'
+    }
+
+
+    // let queryString = "SELECT * from transactions";
+    let queryString = `SELECT "date", "SPY", "${ticker}" from ${tableName}`
+
+    let matches = [];
+
+    const requestQuery = req.query;
+
+    console.log("query is", requestQuery);
+
+    const columns = Object.keys(requestQuery);
+    const values = Object.values(requestQuery);
+
+    // if (columns.length !== 0) {
+    //   let currentColumn = columns.pop();
+    //   let currentValue = values.pop();
+
+    //   let filterCriteria = ` WHERE ${currentColumn}=${currentValue}`;
+
+    //   while (columns.length >= 1) {
+    //     let currentColumn = columns.pop();
+    //     let currentValue = values.pop();
+
+    //     filterCriteria =
+    //       filterCriteria += `and ${currentColumn}=${currentValue}`;
+    //   }
+
+    //   queryString += filterCriteria;
+    // }
+
+    matches = await pool.query(queryString);
+
+    res.json(matches.rows);
+
+  } catch (error) {
+    console.error(error.message);
+  }
+});
