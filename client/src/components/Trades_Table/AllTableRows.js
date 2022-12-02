@@ -6,9 +6,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   const [rowSequenceClicked, setRowSequenceClicked] = useState(-2);
   const [isFetchingStockData, setIsFetchingStockData] = useState(false);
   const [stockData, setStockData] = useState([]);
-  // const [ticker, setTicker] = useState("");
-  // const [senatorId, setSenatorId] = useState("");
-  // const [transactionDate, setTransactionDate] = useState("");
+
 
   useEffect(() => {
     setRowSequenceClicked(-2);
@@ -22,7 +20,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
       const senatorId = tradesRow.senatorId; 
       const transaction_date = tradesRow.transaction_date; 
 
-      fetchStockDataNEW(ticker, transaction_date, senatorId);
+      fetchStockData(ticker, transaction_date, senatorId);
     }
   }, [rowSequenceClicked]);
 
@@ -31,7 +29,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   }
 
 
-    async function fetchStockDataNEW(ticker, transaction_date, senatorId) {
+    async function fetchStockData(ticker, transaction_date, senatorId) {
       try {
         setIsFetchingStockData(true);
         const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;

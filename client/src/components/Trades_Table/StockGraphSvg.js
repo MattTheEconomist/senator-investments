@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import * as d3 from "d3";
 import { useRef } from "react";
 import { processStockData 
- } from "../../Utilities/TimeDataFormating";
+ } from "../../Utilities/ProcessStockData";
 
 const StockGraphSvg = ({   
   stockData,
@@ -43,7 +43,7 @@ const StockGraphSvg = ({
 
     const formattedData = processStockData(stockData, transaction_date);
 
-    console.log("formatted data stock graph svg", formattedData)
+    // console.log("formatted data stock graph svg", formattedData)
 
 
 

@@ -22,9 +22,40 @@ export function processStockData(stockData, transaction_date){
     }
 
 
+     // console.log("process stock data, raw data", stockData)
+
+
     const firstRow = stockData[0]
     const columns = Object.keys(firstRow)
-    const ticker = columns.pop()
+
+    const stockDataKeys = Object.keys(stockData)
+
+    let stockDataArrayNEW = []
+
+    const timeParser = d3.timeParse("%Y-%m-%d");
+
+    for( let index =0; index< Object.keys(stockData).length; index++){
+      const currentKey = stockDataKeys[index]
+      const currentRow = stockData[currentKey]
+
+      //handle manipulation (fill nulls and filter start date)
+
+
+      stockDataArrayNEW.push({
+        date: timeParser(currentRow.date), 
+        close: currentRow.close,
+        spy: currentRow.SPY
+      })
+    }
+
+         console.log("process stock data, raw data", stockDataArrayNEW)
+
+
+
+
+
+
+
  
     const datesIdentifier = stockData.map((row) => {
       const rowDate = new Date(row.date);
@@ -41,7 +72,7 @@ export function processStockData(stockData, transaction_date){
 
     const upperRange= indexOfDate + weeksAfterTransaction;
 
-    const timeParser = d3.timeParse("%Y-%m-%d");
+
 
     const stockDataArray = Object.keys(stockData).map((row)=>{
       return{
@@ -53,6 +84,8 @@ export function processStockData(stockData, transaction_date){
     })
 
     const stockDataFilt= stockDataArray.slice(indexOfDate, upperRange );
+
+    console.log("final formatted data, processStockData", stockDataFilt)
 
     return stockDataFilt
   
