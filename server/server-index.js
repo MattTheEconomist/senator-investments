@@ -143,11 +143,9 @@ app.get("/historical/:ticker/:startDate/:senatorId", async (req, res) => {
 
 
     let queryString = `
-
-
     with trans as(
       SELECT transaction_date, type from transactions
-   WHERE TO_DATE(transaction_date,'YYYY-MM-DD') BETWEEN '${startDate}' and date '${startDate}' + interval '6 months' 
+   WHERE TO_DATE(transaction_date,'YYYY-MM-DD')  BETWEEN date '${startDate}' and date '${startDate}' + interval '6 months' 
    AND 
    "senatorId"=${senatorIdInt}
    AND ticker='${ticker}'
@@ -155,25 +153,23 @@ app.get("/historical/:ticker/:startDate/:senatorId", async (req, res) => {
    , 
    hist as (
       SELECT "date", "SPY", "${ticker}" from ${tableName}
-     WHERE TO_DATE("date",'YYYY-MM-DD') BETWEEN '${startDate}'  and date '${startDate}' + interval '6 months' 
+     WHERE TO_DATE("date",'YYYY-MM-DD')  BETWEEN date '${startDate}' - interval '1 week' and date '${startDate}' + interval '6 months' 
        order by "date"
    )
    select hist."SPY", hist."${ticker}",  
-   -- hist."date" as other_date, 
    CASE 
     WHEN hist."date" is null
     THEN trans.transaction_date
     ELSE hist."date"
-   -- END as final_date, 
    END as date, 
    trans.type, 
    trans.transaction_date
     from hist 
    full outer join trans 
    on    trans.transaction_date = hist."date"
-   -- order by final_date
    order by date
    ;
+
 
     `
 
