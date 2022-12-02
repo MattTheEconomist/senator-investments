@@ -13,7 +13,7 @@ AND ticker='OXY'
    WHERE TO_DATE("date",'YYYY-MM-DD') BETWEEN date '2021-04-07' - interval '1 week'  and date '2021-04-07' + interval '6 months' 
     order by "date"
 )
-  select hist."SPY", hist."OXY",  
+  select hist."SPY", hist."OXY" as close,  
    CASE 
     WHEN hist."date" is null
     THEN trans.transaction_date
@@ -41,7 +41,7 @@ AND ticker='OXY'
      WHERE TO_DATE("date",'YYYY-MM-DD')  BETWEEN date '${startDate}' - interval '1 week' and date '${startDate}' + interval '6 months' 
        order by "date"
    )
-   select hist."SPY", hist."${ticker}",  
+   select hist."SPY", hist."${ticker}" as close,  
    CASE 
     WHEN hist."date" is null
     THEN trans.transaction_date

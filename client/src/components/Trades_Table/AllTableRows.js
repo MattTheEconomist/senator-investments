@@ -4,8 +4,11 @@ import SingleTableRow from "./SingleTableRow";
 
 const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   const [rowSequenceClicked, setRowSequenceClicked] = useState(-2);
-  const [stockData, setStockData] = useState([]);
   const [isFetchingStockData, setIsFetchingStockData] = useState(false);
+  const [stockData, setStockData] = useState([]);
+  // const [ticker, setTicker] = useState("");
+  // const [senatorId, setSenatorId] = useState("");
+  // const [transactionDate, setTransactionDate] = useState("");
 
   useEffect(() => {
     setRowSequenceClicked(-2);
@@ -14,9 +17,12 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   useEffect(() => {
     if (rowSequenceClicked !== -2) {
       const tradesRow = tradeDataOrdered[rowSequenceClicked];
-      const ticker = tradesRow.ticker;
 
-      fetchStockDataNEW(ticker);
+      const ticker = tradesRow.ticker;
+      const senatorId = tradesRow.senatorId; 
+      const transaction_date = tradesRow.transaction_date; 
+
+      fetchStockDataNEW(ticker, transaction_date, senatorId);
     }
   }, [rowSequenceClicked]);
 
@@ -25,10 +31,11 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   }
 
 
-    async function fetchStockDataNEW (ticker) {
+    async function fetchStockDataNEW(ticker, transaction_date, senatorId) {
       try {
         setIsFetchingStockData(true);
-        const endpoint = `http://localhost:5001/historical/${ticker}`;
+        const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;
+
         const res = await fetch(endpoint);
         const json = await res.json();
         if (Object.keys(json))

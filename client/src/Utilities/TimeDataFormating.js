@@ -4,6 +4,8 @@ import * as d3 from "d3";
 export function processStockData(stockData, transaction_date){
   //handle error somehow. add something else? 
 
+  console.log("raw data from time data formatting", stockData)
+
     if (stockData === "no data") {
       return "no data";
     }
@@ -44,7 +46,7 @@ export function processStockData(stockData, transaction_date){
     const stockDataArray = Object.keys(stockData).map((row)=>{
       return{
         date: timeParser(stockData[row].date), 
-        close: stockData[row][ticker],
+        close: stockData[row].close,
         spy: stockData[row].SPY
 
       }

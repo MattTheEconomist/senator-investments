@@ -8,6 +8,7 @@ const TradesTable = ({ tradeData, isFetching }) => {
   const [reorderTrigger, setReorderTrigger] = useState(false);
 
   useEffect(() => {
+    // console.log("from trades table", tradeData)
     setTradeDataOrdered(tradeData);
     setReorderTrigger(false);
   }, [isFetching, tradeData, reorderTrigger]);
