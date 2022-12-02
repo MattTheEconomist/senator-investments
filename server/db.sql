@@ -1,44 +1,65 @@
 
 
-
-
 with trans as(
    SELECT transaction_date, type from transactions
--- WHERE TO_DATE(transaction_date,'YYYY-MM-DD') BETWEEN '2021-04-07' and date '2021-04-07'+ interval '6 months' 
--- AND 
-WHERE 
+WHERE TO_DATE(transaction_date,'YYYY-MM-DD') BETWEEN '2021-04-07' and date '2021-04-07'+ interval '6 months' 
+AND 
 "senatorId"=100
 AND ticker='OXY'
 )
 , hist as (
-   SELECT "date", "SPY", "OXY" from "historical_pricesH_R"  order by "date"
+   SELECT "date", "SPY", "OXY" from "historical_pricesH_R" 
+   WHERe TO_DATE("date",'YYYY-MM-DD') BETWEEN '2021-04-07' and date '2021-04-07'+ interval '6 months' 
+    order by "date"
 )
-select hist."date",  hist."SPY", hist."OXY", trans.type, 
-trans.transaction_date
- from hist 
-left join trans 
-on 
-trans.transaction_date = hist."date"
--- select * from trans
+
+  select hist."SPY", hist."OXY",  
+   -- hist."date" as other_date, 
+   CASE 
+    WHEN hist."date" is null
+    THEN trans.transaction_date
+    ELSE hist."date"
+   -- END as final_date, 
+   END as date, 
+   trans.type, 
+   trans.transaction_date
+    from hist 
+   full outer join trans 
+   on    trans.transaction_date = hist."date"
+   -- order by final_date
+   order by date
 
 
 ;
 
+--QUERY STRING 
 
-
--- select * from cte
--- select historical_pricesH_R.OXY limit 1
--- select "historical_pricesH_R"."OXY" limit 1
-
-
---find senatorId column 
-
-select "senatorId" from transactions limit 1;
-
-
-
--- select * from transactions where false ; 
-
-SELECT "date", "SPY", "${ticker}" from ${tableName} order by "date"
-SELECT "date", "SPY", "A" from "historical_pricesA_G" order by "date" limit 3; 
-
+    with trans as(
+      SELECT transaction_date, type from transactions
+   WHERE TO_DATE(transaction_date,'YYYY-MM-DD') BETWEEN '${startDate}' and date '${startDate}' + interval '6 months' 
+   AND 
+   "senatorId"=${senatorIdInt}
+   AND ticker='${ticker}'
+   )
+   , 
+   hist as (
+      SELECT "date", "SPY", "${ticker}" from ${tableName}
+     WHERE TO_DATE("date",'YYYY-MM-DD') BETWEEN '${startDate}'  and date '${startDate}' + interval '6 months' 
+       order by "date"
+   )
+   select hist."SPY", hist."${ticker}",  
+   -- hist."date" as other_date, 
+   CASE 
+    WHEN hist."date" is null
+    THEN trans.transaction_date
+    ELSE hist."date"
+   -- END as final_date, 
+   END as date, 
+   trans.type, 
+   trans.transaction_date
+    from hist 
+   full outer join trans 
+   on    trans.transaction_date = hist."date"
+   -- order by final_date
+   order by date
+   ;
