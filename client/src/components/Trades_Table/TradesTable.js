@@ -8,7 +8,6 @@ const TradesTable = ({ tradeData, isFetching }) => {
   const [reorderTrigger, setReorderTrigger] = useState(false);
 
   useEffect(() => {
-    // console.log("from trades table", tradeData)
     setTradeDataOrdered(tradeData);
     setReorderTrigger(false);
   }, [isFetching, tradeData, reorderTrigger]);
@@ -32,7 +31,7 @@ const TradesTable = ({ tradeData, isFetching }) => {
 
     if (header === "transaction_date") {
       rez = tradeData.sort((a, b) =>
-        new Date(b[header]) > new Date(a[header]) ? firstReturn : secondReturn
+       new Date(b[header]) > new Date(a[header]) ? firstReturn : secondReturn
       );
     }
     if (header === "ticker") {
@@ -110,7 +109,6 @@ const TradesTable = ({ tradeData, isFetching }) => {
     );
   });
 
-  // console.log("from trades table file")
 
   return (
     <>

@@ -35,8 +35,6 @@ export function processStockData(stockData, transaction_date){
     const timeParser = d3.timeParse("%Y-%m-%d");
 
 
-
-
     for( let index =0; index< Object.keys(stockData).length; index++){
       const currentKey = stockDataKeys[index]
       const currentRow = stockData[currentKey]
@@ -49,6 +47,8 @@ export function processStockData(stockData, transaction_date){
     let finalPrice_ticker = currentPrice_ticker
     let finalPrice_spy = currentPrice_spy
 
+
+// nulls due to transaction date on a non-friday
       function fillNullPrices(stockDataColumn){
         let previousRow = stockData[stockDataKeys[index-1]]
         let nextRow = stockData[stockDataKeys[index+1]]
@@ -57,13 +57,14 @@ export function processStockData(stockData, transaction_date){
 
         let nextPrice = nextRow[stockDataColumn]
 
-        //if there are consecutive transactions, search for the next available 
+        //if there are consecutive transactions, search for the next available row with price data 
         while(!nextPrice){
           nextRow =  stockData[stockDataKeys[index++]]
           nextPrice = nextRow[stockDataColumn]
         }
 
 
+        //find days since last day with data 
         const priceRange  = nextPrice - previousPrice 
         const priceRangeDaily = priceRange/7
         const currentDate = timeParser(currentRow.date)
@@ -85,8 +86,6 @@ export function processStockData(stockData, transaction_date){
         finalPrice_spy = fillNullPrices('SPY')
       }
 
-// nulls due to transaction date on a non-friday
-
 
       finalPrice_ticker = Math.round(finalPrice_ticker *100)/100
       finalPrice_spy = Math.round(finalPrice_spy *100)/100
@@ -96,17 +95,14 @@ export function processStockData(stockData, transaction_date){
         date: timeParser(currentRow.date), 
         close: finalPrice_ticker ,
         SPY: finalPrice_spy, 
-        // fillerVal: fillerVal
-        transactionType: currentRow.type
+        transactionType: currentRow.type, 
+
       })
     }
 
-         console.log("TRANSFORMED process stock data,data", stockDataArrayNEW)
-
-
-
- 
-    const datesIdentifier = stockData.map((row) => {
+  
+    // const datesIdentifier = stockData.map((row) => {
+    const datesIdentifier = stockDataArrayNEW.map((row) => {
       const rowDate = new Date(row.date);
       let appendedValue = 0;
       if (rowDate > transactionDateFormatted) {
@@ -122,24 +118,72 @@ export function processStockData(stockData, transaction_date){
     const upperRange= indexOfDate + weeksAfterTransaction;
 
 
+    const stockDataFilt= stockDataArrayNEW.slice(indexOfDate, upperRange );
 
-    const stockDataArray = Object.keys(stockData).map((row)=>{
-      return{
-        date: timeParser(stockData[row].date), 
-        close: stockData[row].close,
-        spy: stockData[row].SPY
+    // const finalStockDataArray = stockDataFilt
+    const finalStockDataArray = calculateGrowthIndex(stockDataFilt)
 
-      }
-    })
 
-    const stockDataFilt= stockDataArray.slice(indexOfDate, upperRange );
-
-    // console.log("final formatted data, processStockData", stockDataFilt)
-
-    return stockDataFilt
+    console.log("TRANSFORMED process stock data", finalStockDataArray)
+    return finalStockDataArray
   
   }
   return "no data";
+
+}
+
+
+function calculateGrowthIndex(stockDataPreProcessed){
+  const stockDataKeys = Object.keys(stockDataPreProcessed)
+
+  let stockDataArray_growthIndex = []
+  const initialInvestment = 100
+  let currentInvestment_spy = initialInvestment
+  let currentInvestment_ticker = initialInvestment
+
+  for( let index =0; index< Object.keys(stockDataPreProcessed).length; index++){
+          
+    const currentKey = stockDataKeys[index]
+    const currentRow = stockDataPreProcessed[currentKey]
+
+    if(index===0){
+      stockDataArray_growthIndex.push({
+        ...currentRow ,
+        ticker_growth: 100,
+        spy_growth: 100
+      })
+    }
+    else{
+
+    const currentPrice_ticker = currentRow.close
+    const currentPrice_spy = currentRow.SPY
+    const previousIndex = stockDataKeys[index-1]
+    const previousRow = stockDataPreProcessed[previousIndex]
+    const previousPrice_ticker = previousRow.close
+    const previousPrice_spy = previousRow.SPY
+
+    const pctChange_ticker = (currentPrice_ticker- previousPrice_ticker )/previousPrice_ticker
+    const pctChange_spy = (currentPrice_spy - previousPrice_spy)/previousPrice_spy
+    
+    let growthRate_ticker = currentInvestment_ticker*(1+pctChange_ticker)
+    let growthRate_spy = currentInvestment_spy*(1+pctChange_spy)
+
+    growthRate_ticker = Math.round( growthRate_ticker *100)/100
+    growthRate_spy = Math.round( growthRate_spy *100)/100
+
+    stockDataArray_growthIndex.push({
+      ...currentRow ,
+      ticker_growth: growthRate_ticker,
+      spy_growth: growthRate_spy
+
+    })
+
+    }
+  
+  }
+
+  return stockDataArray_growthIndex 
+
 
 }
 
