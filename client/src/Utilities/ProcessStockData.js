@@ -157,6 +157,7 @@ function calculateGrowthIndex(stockDataPreProcessed){
 
     const currentPrice_ticker = currentRow.close
     const currentPrice_spy = currentRow.SPY
+
     const previousIndex = stockDataKeys[index-1]
     const previousRow = stockDataPreProcessed[previousIndex]
     const previousPrice_ticker = previousRow.close
@@ -164,9 +165,15 @@ function calculateGrowthIndex(stockDataPreProcessed){
 
     const pctChange_ticker = (currentPrice_ticker- previousPrice_ticker )/previousPrice_ticker
     const pctChange_spy = (currentPrice_spy - previousPrice_spy)/previousPrice_spy
-    
-    let growthRate_ticker = currentInvestment_ticker*(1+pctChange_ticker)
-    let growthRate_spy = currentInvestment_spy*(1+pctChange_spy)
+
+
+
+    currentInvestment_ticker = currentInvestment_ticker*(1+pctChange_ticker)
+    currentInvestment_spy= currentInvestment_spy*(1+pctChange_spy)
+
+
+    let growthRate_ticker = currentInvestment_ticker
+    let growthRate_spy = currentInvestment_spy
 
     growthRate_ticker = Math.round( growthRate_ticker *100)/100
     growthRate_spy = Math.round( growthRate_spy *100)/100
@@ -175,6 +182,7 @@ function calculateGrowthIndex(stockDataPreProcessed){
       ...currentRow ,
       ticker_growth: growthRate_ticker,
       spy_growth: growthRate_spy
+
 
     })
 
