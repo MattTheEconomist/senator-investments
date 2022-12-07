@@ -4,7 +4,7 @@ import * as d3 from "d3";
 export function processStockData(stockData, transaction_date){
   //handle error somehow. add something else? 
 
-  console.log("raw data from time data formatting", stockData)
+  // console.log("raw data from time data formatting", stockData)
 
     if (stockData === "no data") {
       return "no data";
@@ -100,28 +100,8 @@ export function processStockData(stockData, transaction_date){
       })
     }
 
-  
-    // const datesIdentifier = stockData.map((row) => {
-    const datesIdentifier = stockDataArrayNEW.map((row) => {
-      const rowDate = new Date(row.date);
-      let appendedValue = 0;
-      if (rowDate > transactionDateFormatted) {
-        appendedValue = 1;
-      }
-      return appendedValue;
-    });
 
-    const indexOfDate = datesIdentifier.indexOf(1);
-
-    const weeksAfterTransaction = 52/2;
-
-    const upperRange= indexOfDate + weeksAfterTransaction;
-
-
-    const stockDataFilt= stockDataArrayNEW.slice(indexOfDate, upperRange );
-
-    // const finalStockDataArray = stockDataFilt
-    const finalStockDataArray = calculateGrowthIndex(stockDataFilt)
+    const finalStockDataArray = calculateGrowthIndex(stockDataArrayNEW)
 
 
     console.log("TRANSFORMED process stock data", finalStockDataArray)
@@ -150,7 +130,8 @@ function calculateGrowthIndex(stockDataPreProcessed){
       stockDataArray_growthIndex.push({
         ...currentRow ,
         ticker_growth: 100,
-        spy_growth: 100
+        spy_growth: 100, 
+        alpha:0
       })
     }
     else{
@@ -166,8 +147,6 @@ function calculateGrowthIndex(stockDataPreProcessed){
     const pctChange_ticker = (currentPrice_ticker- previousPrice_ticker )/previousPrice_ticker
     const pctChange_spy = (currentPrice_spy - previousPrice_spy)/previousPrice_spy
 
-
-
     currentInvestment_ticker = currentInvestment_ticker*(1+pctChange_ticker)
     currentInvestment_spy= currentInvestment_spy*(1+pctChange_spy)
 
@@ -175,14 +154,21 @@ function calculateGrowthIndex(stockDataPreProcessed){
     let growthRate_ticker = currentInvestment_ticker
     let growthRate_spy = currentInvestment_spy
 
+    let alpha = growthRate_ticker  - growthRate_spy
+
+
+
     growthRate_ticker = Math.round( growthRate_ticker *100)/100
     growthRate_spy = Math.round( growthRate_spy *100)/100
+    alpha = Math.round( alpha *100)/100
+
+
 
     stockDataArray_growthIndex.push({
       ...currentRow ,
       ticker_growth: growthRate_ticker,
-      spy_growth: growthRate_spy
-
+      spy_growth: growthRate_spy, 
+      alpha: alpha
 
     })
 

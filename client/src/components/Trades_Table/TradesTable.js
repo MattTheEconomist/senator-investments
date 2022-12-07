@@ -76,6 +76,23 @@ const TradesTable = ({ tradeData, isFetching }) => {
       );
     }
 
+    if (header === "alpha") {
+      function transformNumber(alphaValue) {
+        if (alphaValue=== "Ticker Not Found") {
+          return -100;
+        }
+        return alphaValue
+      }
+
+      rez = tradeData.sort((a, b) =>
+        transformNumber(a[header]) < transformNumber(b[header])
+          ? firstReturn
+          : secondReturn
+      );
+    }
+
+
+
     setTradeDataOrdered(rez);
   }
 
@@ -96,7 +113,13 @@ const TradesTable = ({ tradeData, isFetching }) => {
       headerText: "Amount",
       columnValue: "amount",
     },
+    {
+      headerText: "Alpha",
+      columnValue: "alpha",
+    },
   ];
+
+
 
   const tableHeaders = tableHeaderList.map((el, i) => {
     return (
@@ -108,6 +131,8 @@ const TradesTable = ({ tradeData, isFetching }) => {
       />
     );
   });
+
+  // console.log('trades table', tableHeaders)
 
 
   return (

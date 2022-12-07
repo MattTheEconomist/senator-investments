@@ -22,7 +22,7 @@ app.get("/trades", async (req, res) => {
 
     const requestQuery = req.query;
 
-    console.log("query is", requestQuery);
+    console.log("query, trades is", requestQuery);
 
     const columns = Object.keys(requestQuery);
     const values = Object.values(requestQuery);

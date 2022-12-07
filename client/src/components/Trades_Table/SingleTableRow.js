@@ -45,6 +45,9 @@ const SingleTableRow = ({
         <div key={`amount${sequence}`} className="tradesTableCell">
           {rowData.amount}
         </div>
+        <div key={`alpha${sequence}`} className="tradesTableCell">
+          {rowData.alpha}
+        </div>
       </div>
       {/* {expansionDiv} */}
       <RowExpansion
