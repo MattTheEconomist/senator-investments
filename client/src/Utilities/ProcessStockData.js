@@ -4,7 +4,6 @@ import * as d3 from "d3";
 export function processStockData(stockData, transaction_date){
   //handle error somehow. add something else? 
 
-  // console.log("raw data from time data formatting", stockData)
 
     if (stockData === "no data") {
       return "no data";
@@ -22,9 +21,6 @@ export function processStockData(stockData, transaction_date){
     }
 
 
-     // console.log("process stock data, raw data", stockData)
-
-
     const firstRow = stockData[0]
     const columns = Object.keys(firstRow)
 
@@ -33,7 +29,7 @@ export function processStockData(stockData, transaction_date){
     let stockDataArrayNEW = []
 
     const timeParser = d3.timeParse("%Y-%m-%d");
-
+    let maxAlphaNew = 0
 
     for( let index =0; index< Object.keys(stockData).length; index++){
       const currentKey = stockDataKeys[index]
@@ -93,7 +89,7 @@ export function processStockData(stockData, transaction_date){
 
       stockDataArrayNEW.push({
         date: timeParser(currentRow.date), 
-        close: finalPrice_ticker ,
+        close: finalPrice_ticker,
         SPY: finalPrice_spy, 
         transactionType: currentRow.type, 
 
@@ -105,6 +101,16 @@ export function processStockData(stockData, transaction_date){
 
 
     console.log("TRANSFORMED process stock data", finalStockDataArray)
+
+
+    let alphaList = finalStockDataArray.map(row=> row.alpha)
+
+    let maxAlpha = alphaList.reduce((accumulator, current) => {
+      return accumulator > current ? accumulator : current
+    })
+
+    console.log("max Alpha process stock data",    maxAlpha)
+
     return finalStockDataArray
   
   }
@@ -129,10 +135,19 @@ function calculateGrowthIndex(stockDataPreProcessed){
     if(index===0){
       stockDataArray_growthIndex.push({
         ...currentRow ,
+        ticker_growth: null,
+        spy_growth: null, 
+        alpha:null
+      })
+    }
+    else if(index===1){
+      stockDataArray_growthIndex.push({
+        ...currentRow ,
         ticker_growth: 100,
         spy_growth: 100, 
         alpha:0
       })
+
     }
     else{
 
