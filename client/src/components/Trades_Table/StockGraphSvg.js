@@ -6,7 +6,8 @@ import { processStockData
 
 const StockGraphSvg = ({   
   stockData,
-   transaction_date 
+   transaction_date , 
+   isGrowthData
 
 }) => {
 
@@ -130,8 +131,6 @@ const StockGraphSvg = ({
         .attr("cy", (d)=> yScale(d.close))
         .attr("r", 5)
         .style("fill", (d)=> transactionColorMap[d.transactionType])
-
-
 
 
     }

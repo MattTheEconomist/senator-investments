@@ -45,7 +45,6 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
     }
 
 
-
   return (
     <>
       {isFetching ? (

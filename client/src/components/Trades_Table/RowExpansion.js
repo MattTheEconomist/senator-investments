@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import StockGraphSvg from "./StockGraphSvg";
+import ToggleGrowth from "./ToggleGrowth"
 
 const RowExpansion = ({   stockData,
   sequence, rowData, rowSequenceClicked }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isGrowthData, setIsGrowthData ] = useState(false)
 
 
   useEffect(() => {
@@ -13,7 +15,8 @@ const RowExpansion = ({   stockData,
     } else {
       setIsExpanded(false);
     }
-  }, [rowSequenceClicked, sequence]);
+ }, [rowSequenceClicked, sequence]);
+
 
   const transaction_date = rowData.transaction_date;
 
@@ -33,20 +36,28 @@ const RowExpansion = ({   stockData,
     </li>
   ));
 
+
   const expansionDiv = isExpanded ? (
     <div id="expansionDiv">
       <div id="criticalInfoCard">
         <ul id="yo">{cardListItems}</ul>
       </div>
-      {/* <StockGraphTimeSeries
-        transaction_date={transaction_date}
-        // rawStockData={rawStockData}
-        stockData={stockData}
-      /> */}
-      <StockGraphSvg
+
+      <ToggleGrowth 
+      isGrowthData = {isGrowthData}
+      setIsGrowthData = {setIsGrowthData}
+       />
+
+
+<div id="stockGraphContainer">
+<StockGraphSvg
         transaction_date={transaction_date}
         stockData = {stockData}
+        isGrowthData = {isGrowthData}
       />
+
+</div>
+
     </div>
   ) : (
     <></>
