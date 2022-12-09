@@ -6,11 +6,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   const [rowSequenceClicked, setRowSequenceClicked] = useState(-2);
   const [isFetchingStockData, setIsFetchingStockData] = useState(false);
   const [stockData, setStockData] = useState([]);
-
-
-  useEffect(() => {
-    setRowSequenceClicked(-2);
-  }, [reorderTrigger]);
+  const [filterCriteria, setFilterCriteria] = useState({})
 
   useEffect(() => {
     if (rowSequenceClicked !== -2) {
@@ -20,9 +16,23 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
       const senatorId = tradesRow.senatorId; 
       const transaction_date = tradesRow.transaction_date; 
 
-      fetchStockData(ticker, transaction_date, senatorId);
+      // setFilterCriteria({})
+
+      setFilterCriteria({ticker: tradesRow.ticker, 
+        transaction_date:tradesRow.senatorId, 
+        senatorId:tradesRow.senatorId })
+
+        // console.log('currenty fetching', filterCriteria)
+        // console.log('currenty fetching', tradesRow)
+
+      // fetchStockData(ticker, transaction_date, senatorId);
+      // fetchStockData(filterCriteria.ticker, filterCriteria.transaction_date, filterCriteria.senatorId);
+      setStockData([])
+      fetchStockData(tradesRow.ticker, tradesRow.transaction_date, tradesRow.senatorId);
     }
-  }, [rowSequenceClicked]);
+  }, [rowSequenceClicked
+    // ,filterCriteria
+  ]);
 
   function identifyRowClicked(seq) {
     setRowSequenceClicked(seq);
@@ -31,14 +41,17 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 
     async function fetchStockData(ticker, transaction_date, senatorId) {
       try {
+
         setIsFetchingStockData(true);
         const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;
 
         const res = await fetch(endpoint);
         const json = await res.json();
-        if (Object.keys(json))
-            setStockData(json);
+        if (Object.keys(json)){
+          setStockData(json);
           setIsFetchingStockData(false);
+        }
+
       } catch (error) {
         console.error(error);
       }
@@ -83,3 +96,23 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 };
 
 export default AllTableRows;
+
+
+
+  // useEffect(() => {
+  //   setRowSequenceClicked(-2);
+  // }, [reorderTrigger]);
+
+  // useEffect(()=>{
+  //   if (rowSequenceClicked !== -2) {
+  //     const tradesRow = tradeDataOrdered[rowSequenceClicked];
+
+  //     setFilterCriteria({ticker: tradesRow.ticker, 
+  //       transaction_date:tradesRow.senatorId, 
+  //       senatorId:tradesRow.senatorId })
+
+  //       console.log('all table rows' , filterCriteria)
+
+  //   }
+
+  // }, [rowSequenceClicked])

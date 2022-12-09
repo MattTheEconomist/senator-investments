@@ -11,6 +11,13 @@ const StockGraphSvg = ({
 
 }) => {
 
+  useEffect(()=>{
+    cleanupOldGraph()
+    drawGraph(stockData, isGrowthData)
+  }, [isGrowthData])
+
+
+
   const dimensions = {
     width: 600,
     height: 300,
@@ -23,6 +30,8 @@ const StockGraphSvg = ({
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
 
+
+
   function textElement(text) {
     return (
       <text x="0" y="50" fontFamily="Verdana" fontSize={"20"} fill="blue">
@@ -31,18 +40,35 @@ const StockGraphSvg = ({
     );
   }
 
-  function drawGraph(dataInput) {
+    function cleanupOldGraph(){
+      d3.select("svg")
+      .selectAll("*")
+      .remove()
+
+  }
+
+  function drawGraph(dataInput, isGrowthData) {
+
+
+
     const svgEl = d3.select(svgRef.current);
 
     if (svgEl) {
       svgEl.selectAll("*").remove();
+
+      d3.select(".lineTicker").remove()
+
+
     }
 
     if (stockData.length < 1) {
       return textElement("Fetching Data . . .");
     }
 
-    const formattedData = processStockData(stockData, transaction_date);
+  let formattedData = processStockData(stockData, transaction_date);
+  formattedData.shift()
+
+
 
     const transactionsData = formattedData.filter(row=> row.transactionType)
 
@@ -50,7 +76,10 @@ const StockGraphSvg = ({
     console.log('stock graphsvg', transactionsData)
 
 
+
+
     if (formattedData === "no data") {
+    // if (formattedData.length < 1) {
       d3.select("svg")
         .append("text")
         .text("no data stock price. . .")
@@ -59,6 +88,15 @@ const StockGraphSvg = ({
     } else {
       const dates = formattedData.map((row) => row.date);
       const values = formattedData.map((row) => row.close);
+
+      let valueCol = isGrowthData ? 'ticker_growth': 'close' 
+
+
+      const tickerGrowthValues = formattedData.map((row)=> row.ticker_growth)
+      const spyGrowthValues = formattedData.map((row)=> row.spy_growth)
+      const allGrowthValues = spyGrowthValues.concat(tickerGrowthValues)
+
+
 
       const svg = svgEl
         .append("g")
@@ -80,10 +118,17 @@ const StockGraphSvg = ({
       xAxisGroup.selectAll("line").attr("stroke", "black");
       xAxisGroup.selectAll("text").attr("font-size", "0.75rem");
 
-      const yScale = d3
+      let yScale = d3
         .scaleLinear()
         .domain(d3.extent(values))
         .range([height, 0]);
+    
+      if(isGrowthData){
+        yScale = d3
+        .scaleLinear()
+        .domain(d3.extent(allGrowthValues))
+        .range([height, 0]);
+      }
 
       const yAxis = d3.axisLeft(yScale).ticks(5).tickSize(8);
       const yAxisGroup = svg
@@ -98,19 +143,42 @@ const StockGraphSvg = ({
         .attr("color", "black")
         .attr("font-size", "0.75rem");
 
-      const line = d3
+      // const lineTicker = d3
+      let lineTicker = d3
         .line()
         .x((d) => xScale(d.date) + margin.left)
-        .y((d) => yScale(d.close));
+        .y((d) => yScale(d[valueCol]))
+        // .y((d) => yScale(d.close))
 
+      
       
       d3.select("svg")
         .append("path") // add a path to the existing svg
         .datum(formattedData)
-        .attr("d", line)
+        .attr("d", lineTicker)
         .attr("fill", "none")
         .attr("stroke", "black")
+        .attr("stroke-width", 3)
+        .attr("className", "lineTicker")
+
+
+      const lineSpy = d3
+      .line()
+      .x((d) => xScale(d.date) + margin.left)
+      .y((d) => yScale(d.spy_growth))
+
+      if(isGrowthData){
+        d3.select("svg")
+        .append("path") // add a path to the existing svg
+        .datum(formattedData)
+        .attr("d", lineSpy)
+        .attr("fill", "none")
+        .attr("stroke", "blue")
         .attr("stroke-width", 3);
+      }
+
+     
+
 
 
       const transactionColorMap={
@@ -128,7 +196,7 @@ const StockGraphSvg = ({
         .enter()
         .append("circle")
         .attr("cx", (d) => xScale(d.date)+ margin.left)
-        .attr("cy", (d)=> yScale(d.close))
+        .attr("cy", (d)=> yScale(d[valueCol]))
         .attr("r", 5)
         .style("fill", (d)=> transactionColorMap[d.transactionType])
 
@@ -136,13 +204,12 @@ const StockGraphSvg = ({
     }
   }
 
-  const svgGraph =
-    stockData.length < 1 ? textElement("Fetching") : drawGraph(stockData);
+  // const svgGraph =
+  //   stockData.length < 1 ? textElement("Fetching") : drawGraph(stockData);
 
   return (
     <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg">
-      {/* {svgGraph} */}
-      {/* {svgGraph} */}
+
     </svg>
   );
 };

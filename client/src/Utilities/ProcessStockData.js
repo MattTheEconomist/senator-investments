@@ -100,7 +100,7 @@ export function processStockData(stockData, transaction_date){
     const finalStockDataArray = calculateGrowthIndex(stockDataArrayNEW)
 
 
-    console.log("TRANSFORMED process stock data", finalStockDataArray)
+    // console.log("TRANSFORMED process stock data", finalStockDataArray)
 
 
     let alphaList = finalStockDataArray.map(row=> row.alpha)
@@ -109,7 +109,7 @@ export function processStockData(stockData, transaction_date){
       return accumulator > current ? accumulator : current
     })
 
-    console.log("max Alpha process stock data",    maxAlpha)
+    // console.log("max Alpha process stock data",    maxAlpha)
 
     return finalStockDataArray
   

@@ -54,10 +54,10 @@ const RowExpansion = ({   stockData,
         transaction_date={transaction_date}
         stockData = {stockData}
         isGrowthData = {isGrowthData}
+        // isGrowthData = {true}
       />
 
 </div>
-
     </div>
   ) : (
     <></>
