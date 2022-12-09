@@ -43,8 +43,10 @@ const StockGraphSvg = ({
 
     const formattedData = processStockData(stockData, transaction_date);
 
-    // console.log("formatted data stock graph svg", formattedData)
+    const transactionsData = formattedData.filter(row=> row.transactionType)
 
+
+    console.log('stock graphsvg', transactionsData)
 
 
     if (formattedData === "no data") {
@@ -60,11 +62,11 @@ const StockGraphSvg = ({
       const svg = svgEl
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
+        
 
       const xScale = d3
         .scaleTime()
         .domain(d3.extent(dates))
-        // .range([margin.left, svgWidth - margin.right]);
         .range([margin.left, svgWidth - margin.right]);
 
       const xAxis = d3.axisBottom(xScale).ticks(10).tickSize(10);
@@ -97,10 +99,10 @@ const StockGraphSvg = ({
 
       const line = d3
         .line()
-        // .x((d) => xScale(d.date))
         .x((d) => xScale(d.date) + margin.left)
         .y((d) => yScale(d.close));
 
+      
       d3.select("svg")
         .append("path") // add a path to the existing svg
         .datum(formattedData)
@@ -108,6 +110,30 @@ const StockGraphSvg = ({
         .attr("fill", "none")
         .attr("stroke", "black")
         .attr("stroke-width", 3);
+
+
+      const transactionColorMap={
+        'Purchase': "#69b3a2", 
+        'Sale (Partial)': "#EB5542", 
+        'Sale (Full)': "#D43141",
+        'Exchange' : "grey"
+      }
+
+
+        d3.select("svg")
+        .append('g')
+        .selectAll("dot")
+        .data(transactionsData )
+        .enter()
+        .append("circle")
+        .attr("cx", (d) => xScale(d.date)+ margin.left)
+        .attr("cy", (d)=> yScale(d.close))
+        .attr("r", 5)
+        .style("fill", (d)=> transactionColorMap[d.transactionType])
+
+
+
+
     }
   }
 
