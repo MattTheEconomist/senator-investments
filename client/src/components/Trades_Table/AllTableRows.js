@@ -7,6 +7,12 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 
   const [filterCriteria, setFilterCriteria] = useState({})
 
+  useEffect(()=>{
+    // console.log('all talbe rows', reorderTrigger)
+    setRowSequenceClicked(-2)
+
+  }, [reorderTrigger])
+
 
   useEffect(() => {
     if (rowSequenceClicked !== -2) {
@@ -58,6 +64,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
             rowSequenceClicked={rowSequenceClicked}
             identifyRowClicked={identifyRowClicked}
             key={`singleRow${sequence}`}
+  
 
           />
 

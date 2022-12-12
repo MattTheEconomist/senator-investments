@@ -78,10 +78,13 @@ const TradesTable = ({ tradeData, isFetching }) => {
 
     if (header === "alpha") {
       function transformNumber(alphaValue) {
+        // return alphaValue.toString()
         if (alphaValue=== "Ticker Not Found") {
-          return -100;
+          return -999;
+          // return alphaValue
         }
-        return alphaValue
+        return parseFloat(alphaValue)
+        // return secondReturn
       }
 
       rez = tradeData.sort((a, b) =>
@@ -147,26 +150,9 @@ const TradesTable = ({ tradeData, isFetching }) => {
           />
         </div>
       </div>
-      {/* <table>
-        <thead>
-          <tr>{tableHeaders}</tr>
-        </thead>
-        <tbody>
-          <AllTableRows
-            isFetching={isFetching}
-            tradeDataOrdered={tradeDataOrdered}
-            reorderTrigger={reorderTrigger}
-          />
-          {tableRows}
-        </tbody>
-      </table> */}
+
     </>
 
-    // <>
-
-    //   <h5>helooo</h5>
-    //   <ul>{tradeListElements}</ul>
-    // </>
   );
 };
 

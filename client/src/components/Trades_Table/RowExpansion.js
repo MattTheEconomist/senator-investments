@@ -20,7 +20,6 @@ const RowExpansion = ({    sequence,
   useEffect(() => {
     if (rowSequenceClicked === sequence) {
       setIsExpanded(true);
-      console.log('is expanded row expansion', isExpanded)
       fetchStockData(rowData.ticker, rowData.transaction_date, rowData.senatorId)     
 
 
@@ -28,9 +27,6 @@ const RowExpansion = ({    sequence,
       setIsExpanded(false);
     }
  }, [rowSequenceClicked, sequence]);
-
-
-
 
 
 
@@ -56,7 +52,6 @@ const RowExpansion = ({    sequence,
 
   function fetchStockData(ticker, transaction_date, senatorId) {
 
-    console.log('FETCH TRIGGERED')
     setIsFetchingStockData(true);
 const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;
 
