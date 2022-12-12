@@ -11,6 +11,11 @@ const StockGraphSvg = ({
 
 }) => {
 
+ useEffect(()=>{
+  drawGraph(stockData, isGrowthData)
+ }, [stockData])
+
+
   useEffect(()=>{
     cleanupOldGraph()
     drawGraph(stockData, isGrowthData)
@@ -66,7 +71,12 @@ const StockGraphSvg = ({
     }
 
   let formattedData = processStockData(stockData, transaction_date);
-  formattedData.shift()
+
+  // if(formattedData.length > 0){
+  if(formattedData){
+
+    formattedData.shift()
+  }
 
 
 

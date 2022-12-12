@@ -7,8 +7,7 @@ const SingleTableRow = ({
   rowData,
   rowSequenceClicked,
   identifyRowClicked,
-  stockData, 
-  isFetchingStockData
+
 }) => {
   const [isHovering, setIsHovering] = useState(false);
 
@@ -23,6 +22,10 @@ const SingleTableRow = ({
   function onMouseLeave(i) {
     setIsHovering(false);
   }
+
+
+
+
 
   return (
     <>
@@ -49,13 +52,11 @@ const SingleTableRow = ({
           {rowData.alpha}
         </div>
       </div>
-      {/* {expansionDiv} */}
       <RowExpansion
         sequence={sequence}
         rowData={rowData}
         rowSequenceClicked={rowSequenceClicked}
-        stockData = {stockData}
-        isFetchingStockData = {isFetchingStockData}
+
       />
     </>
   );

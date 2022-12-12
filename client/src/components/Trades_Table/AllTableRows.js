@@ -4,9 +4,9 @@ import SingleTableRow from "./SingleTableRow";
 
 const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
   const [rowSequenceClicked, setRowSequenceClicked] = useState(-2);
-  const [isFetchingStockData, setIsFetchingStockData] = useState(false);
-  const [stockData, setStockData] = useState([]);
+
   const [filterCriteria, setFilterCriteria] = useState({})
+
 
   useEffect(() => {
     if (rowSequenceClicked !== -2) {
@@ -14,48 +14,20 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 
       const ticker = tradesRow.ticker;
       const senatorId = tradesRow.senatorId; 
-      const transaction_date = tradesRow.transaction_date; 
+      const transaction_date = tradesRow.transaction_date;
 
-      // setFilterCriteria({})
-
-      setFilterCriteria({ticker: tradesRow.ticker, 
-        transaction_date:tradesRow.senatorId, 
-        senatorId:tradesRow.senatorId })
-
-        // console.log('currenty fetching', filterCriteria)
-        // console.log('currenty fetching', tradesRow)
-
-      // fetchStockData(ticker, transaction_date, senatorId);
-      // fetchStockData(filterCriteria.ticker, filterCriteria.transaction_date, filterCriteria.senatorId);
-      setStockData([])
-      fetchStockData(tradesRow.ticker, tradesRow.transaction_date, tradesRow.senatorId);
     }
   }, [rowSequenceClicked
-    // ,filterCriteria
   ]);
+
+
+
 
   function identifyRowClicked(seq) {
     setRowSequenceClicked(seq);
   }
 
 
-    async function fetchStockData(ticker, transaction_date, senatorId) {
-      try {
-
-        setIsFetchingStockData(true);
-        const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;
-
-        const res = await fetch(endpoint);
-        const json = await res.json();
-        if (Object.keys(json)){
-          setStockData(json);
-          setIsFetchingStockData(false);
-        }
-
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
 
   return (
@@ -86,9 +58,9 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
             rowSequenceClicked={rowSequenceClicked}
             identifyRowClicked={identifyRowClicked}
             key={`singleRow${sequence}`}
-            stockData = {stockData}
-            isFetchingStockData = {isFetchingStockData}
+
           />
+
         ))
       )}
     </>
@@ -96,6 +68,26 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 };
 
 export default AllTableRows;
+
+
+
+//GARBAGE 
+
+
+    
+      //  const jsonData =   await fetchStockData(tradesRow.ticker, tradesRow.transaction_date, tradesRow.senatorId);
+      //  const jsonData =  fetchStockData(tradesRow.ticker, tradesRow.transaction_date, tradesRow.senatorId);
+      // setStockData(jsonData)
+
+
+
+
+      // const jsonData = fetchStockData(tradesRow.ticker, tradesRow.transaction_date, tradesRow.senatorId);
+      // console.log('JSON DATA FROM ALL TABLE ROWS', jsonData)
+
+      // setStockData(jsonData)
+
+
 
 
 
@@ -116,3 +108,21 @@ export default AllTableRows;
   //   }
 
   // }, [rowSequenceClicked])
+
+
+
+          // console.log("ALL TABLE ROWS EFFECT TRIGGERED")
+        // does not work 
+        // console.log(filterCriteria) 
+
+        // works 
+        // console.log(tradesRow)
+
+        // console.log(tradesRow.ticker, tradesRow.transaction_date, tradesRow.senatorId)
+
+
+        // console.log('currenty fetching', filterCriteria)
+        // console.log('currenty fetching', tradesRow)
+
+      // fetchStockData(ticker, transaction_date, senatorId);
+      // fetchStockData(filterCriteria.ticker, filterCriteria.transaction_date, filterCriteria.senatorId);

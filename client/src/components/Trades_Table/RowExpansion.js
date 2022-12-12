@@ -3,19 +3,35 @@ import { useState, useEffect } from "react";
 import StockGraphSvg from "./StockGraphSvg";
 import ToggleGrowth from "./ToggleGrowth"
 
-const RowExpansion = ({   stockData,
-  sequence, rowData, rowSequenceClicked }) => {
+const RowExpansion = ({    sequence,
+   rowData,
+    rowSequenceClicked, 
+
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isGrowthData, setIsGrowthData ] = useState(false)
+  const [stockData, setStockData] = useState([])
+  const [isFetchingStockData, setIsFetchingStockData] = useState(false)
+  const [secondTrigger, setSecondTrigger] = useState(false)
+
+
 
 
   useEffect(() => {
     if (rowSequenceClicked === sequence) {
       setIsExpanded(true);
+      console.log('is expanded row expansion', isExpanded)
+      fetchStockData(rowData.ticker, rowData.transaction_date, rowData.senatorId)     
+
+
     } else {
       setIsExpanded(false);
     }
  }, [rowSequenceClicked, sequence]);
+
+
+
+
 
 
   const transaction_date = rowData.transaction_date;
@@ -37,6 +53,30 @@ const RowExpansion = ({   stockData,
   ));
 
 
+
+  function fetchStockData(ticker, transaction_date, senatorId) {
+
+    console.log('FETCH TRIGGERED')
+    setIsFetchingStockData(true);
+const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;
+
+      try{
+
+        fetch(endpoint)
+      .then((res)=> res.json())
+      .then((res)=>setStockData(res))
+      }
+      catch(error){
+      console.error(error)
+
+      }
+      finally{
+      setIsFetchingStockData(false)
+      }
+
+}
+
+
   const expansionDiv = isExpanded ? (
     <div id="expansionDiv">
       <div id="criticalInfoCard">
@@ -54,7 +94,6 @@ const RowExpansion = ({   stockData,
         transaction_date={transaction_date}
         stockData = {stockData}
         isGrowthData = {isGrowthData}
-        // isGrowthData = {true}
       />
 
 </div>
@@ -65,5 +104,9 @@ const RowExpansion = ({   stockData,
 
   return <>{expansionDiv}</>;
 };
+
+
+
+
 
 export default RowExpansion;

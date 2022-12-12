@@ -6,7 +6,6 @@ const TableHeader = ({ headerText, columnValue, reOrderByHeader }) => {
   // let tableAscending = true;
 
   function orderTable() {
-    // console.log("from header", columnValue);
     setIsAscending(!isAscending);
     reOrderByHeader(columnValue, isAscending);
   }

@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 
 
 const ToggleGrowth = ({isGrowthMode, 
-    // toggleGrowthMode
     isGrowthData, 
     setIsGrowthData
 })=>{
+
+
 
 
       // let toggleText = "Currently Displaying Historical Prices"
