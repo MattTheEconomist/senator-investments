@@ -174,6 +174,7 @@ const StockGraphSvg = ({
         .attr("stroke", "black")
         .attr("stroke-width", 3)
         .attr("className", "lineTicker")
+        .lower()
 
 
 
@@ -196,23 +197,31 @@ const StockGraphSvg = ({
             return yScale(d.ticker_growth)- margin.top
           }
         })
-        .attr("width", 10)
-        .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth)- yScale(d.spy_growth) )))
+        .attr("width", 12)
+        .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth) - yScale(d.spy_growth) )))
         .attr("fill", "green")
+        // .style("opacity", 1)
         .style("opacity", 0)
         .attr("id", (d,i)=> `value ${d.alpha}`)
-        .attr("class", "BARRRRRS")
+        .raise()
         .on('mouseover', function(d) {
           setMouseOverValue(d.target.id)
           d3.select(this)
+          // .moveToFront()
+          .raise()
           .transition(100)
           .style("opacity", 1)
+
+
       })
+      .attr("rx", 6)
+      .attr("ry", 6)
       .on("mouseout", function(d){
         d3.select(this)
         .transition(100)
         .style("opacity", 0)
       })
+
 
 
       const lineSpy = d3
@@ -227,7 +236,8 @@ const StockGraphSvg = ({
         .attr("d", lineSpy)
         .attr("fill", "none")
         .attr("stroke", "blue")
-        .attr("stroke-width", 3);
+        .attr("stroke-width", 3)
+        .lower()
       }
 
      
@@ -257,8 +267,7 @@ const StockGraphSvg = ({
     }
   }
 
-  // const svgGraph =
-  //   stockData.length < 1 ? textElement("Fetching") : drawGraph(stockData);
+
 
   return (
     <>
