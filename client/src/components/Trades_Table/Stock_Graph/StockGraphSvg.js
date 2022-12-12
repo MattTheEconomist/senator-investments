@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as d3 from "d3";
 import { useRef } from "react";
 import { processStockData 
- } from "../../Utilities/ProcessStockData";
+ } from "../../../Utilities/ProcessStockData";
+
+ import Tooltip from "./Tooltip";
 
 const StockGraphSvg = ({   
   stockData,
@@ -10,6 +12,8 @@ const StockGraphSvg = ({
    isGrowthData
 
 }) => {
+
+  const [mouseOverValue, setMouseOverValue ]= useState("nothing")
 
  useEffect(()=>{
   drawGraph(stockData, isGrowthData)
@@ -63,6 +67,8 @@ const StockGraphSvg = ({
 
       d3.select(".lineTicker").remove()
 
+      d3.selectAll(".mybar").remove()
+
 
     }
 
@@ -81,9 +87,6 @@ const StockGraphSvg = ({
 
 
     const transactionsData = formattedData.filter(row=> row.transactionType)
-
-
-    console.log('stock graphsvg', transactionsData)
 
 
 
@@ -105,6 +108,8 @@ const StockGraphSvg = ({
       const tickerGrowthValues = formattedData.map((row)=> row.ticker_growth)
       const spyGrowthValues = formattedData.map((row)=> row.spy_growth)
       const allGrowthValues = spyGrowthValues.concat(tickerGrowthValues)
+
+      console.log("stock graph", formattedData)
 
 
 
@@ -134,7 +139,7 @@ const StockGraphSvg = ({
         .range([height, 0]);
     
       if(isGrowthData){
-        yScale = d3
+       yScale = d3
         .scaleLinear()
         .domain(d3.extent(allGrowthValues))
         .range([height, 0]);
@@ -158,7 +163,6 @@ const StockGraphSvg = ({
         .line()
         .x((d) => xScale(d.date) + margin.left)
         .y((d) => yScale(d[valueCol]))
-        // .y((d) => yScale(d.close))
 
       
       
@@ -170,6 +174,45 @@ const StockGraphSvg = ({
         .attr("stroke", "black")
         .attr("stroke-width", 3)
         .attr("className", "lineTicker")
+
+
+
+        const yScaleGrowth = d3
+        .scaleLinear()
+        .domain(d3.extent(allGrowthValues))
+        .range([height, 0]);
+
+
+
+        svg.selectAll("mybar")
+        .data(formattedData)
+        .enter()
+        .append("rect")
+        .attr("x", (d) => xScale(d.date))
+        .attr("y", (d,i)=> {
+          if(d.alpha <0){
+            return yScale(d.spy_growth)- margin.top
+          }else{
+            return yScale(d.ticker_growth)- margin.top
+          }
+        })
+        .attr("width", 10)
+        .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth)- yScale(d.spy_growth) )))
+        .attr("fill", "green")
+        .style("opacity", 0)
+        .attr("id", (d,i)=> `value ${d.alpha}`)
+        .attr("class", "BARRRRRS")
+        .on('mouseover', function(d) {
+          setMouseOverValue(d.target.id)
+          d3.select(this)
+          .transition(100)
+          .style("opacity", 1)
+      })
+      .on("mouseout", function(d){
+        d3.select(this)
+        .transition(100)
+        .style("opacity", 0)
+      })
 
 
       const lineSpy = d3
@@ -218,9 +261,14 @@ const StockGraphSvg = ({
   //   stockData.length < 1 ? textElement("Fetching") : drawGraph(stockData);
 
   return (
-    <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg">
+    <>
+        <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg"
+        >
 
-    </svg>
+</svg>
+<Tooltip mouseOverValue = {mouseOverValue}/>
+    </>
+
   );
 };
 

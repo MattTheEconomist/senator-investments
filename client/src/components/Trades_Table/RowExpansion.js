@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import StockGraphSvg from "./StockGraphSvg";
+import StockGraphSvg from "./Stock_Graph/StockGraphSvg";
 import ToggleGrowth from "./ToggleGrowth"
 
 const RowExpansion = ({    sequence,
