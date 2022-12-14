@@ -4,18 +4,18 @@ import { useRef } from "react";
 import { processStockData 
  } from "../../../Utilities/ProcessStockData";
 
- import Tooltip from "./Tooltip";
 
 const StockGraphSvg = ({   
   stockData,
    transaction_date , 
-   isGrowthData
+   isGrowthData, 
+   thisTicker
 
 }) => {
 
-  const [mouseOverValue, setMouseOverValue ]= useState("nothing")
-  const [mouseX, setMouseX ]= useState(0)
-  const [xHover, setXHover] = useState(0)
+  // const [mouseOverValue, setMouseOverValue ]= useState("nothing")
+  // const [mouseX, setMouseX ]= useState(0)
+  // const [xHover, setXHover] = useState(0)
 
  useEffect(()=>{
   drawGraph(stockData, isGrowthData)
@@ -245,7 +245,7 @@ const StockGraphSvg = ({
               .style("opacity", 1)
               // .style("background-color","#819FFF" )
               // .style("color","#819FFF" )
-              .style("backgroundColor","#819FFF" )
+              // .style("backgroundColor","#819FFF" )
 
               d3.select("#tooltipText")
               .text(d.target.id)
@@ -315,17 +315,30 @@ const StockGraphSvg = ({
   }
 
 
+  const graphTitleText = isGrowthData? 
+  `${thisTicker} Historical Growth Rates` :
+  `${thisTicker} Historical Prices`
+
+
+
   return (
     <>
+    <div id="graphComponentsContainer">
+    <div id="graphTitleContainer">
+      <p id="graphTitleText">{graphTitleText}</p>
+    </div>
     <div id="tooltipNew">
       <p id="tooltipTitle">Current Alpha:</p>
       {/* Current Alpha: */}
         <div id="tooltipText"></div>
        </div>
+
         <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg"
         >
 
 </svg>
+
+</div>
 
 
     </>
@@ -333,4 +346,4 @@ const StockGraphSvg = ({
   );
 };
 
-export default StockGraphSvg;
+export default StockGraphSvg

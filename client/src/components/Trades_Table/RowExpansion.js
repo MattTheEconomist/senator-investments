@@ -84,11 +84,13 @@ const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}
        />
 
 
-<div id="stockGraphContainer">
+<div id="stockGraphContainer_outter">
 <StockGraphSvg
         transaction_date={transaction_date}
         stockData = {stockData}
         isGrowthData = {isGrowthData}
+        cardListItems = {cardListItems}
+        thisTicker = {rowData.ticker}
       />
 
 </div>
