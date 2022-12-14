@@ -14,6 +14,8 @@ const StockGraphSvg = ({
 }) => {
 
   const [mouseOverValue, setMouseOverValue ]= useState("nothing")
+  const [mouseX, setMouseX ]= useState(0)
+  const [xHover, setXHover] = useState(0)
 
  useEffect(()=>{
   drawGraph(stockData, isGrowthData)
@@ -23,6 +25,8 @@ const StockGraphSvg = ({
   useEffect(()=>{
     cleanupOldGraph()
     drawGraph(stockData, isGrowthData)
+
+
   }, [isGrowthData])
 
 
@@ -30,7 +34,7 @@ const StockGraphSvg = ({
   const dimensions = {
     width: 600,
     height: 300,
-    margin: { top: 30, right: 30, bottom: 30, left: 60 },
+    margin: { top: 50, right: 30, bottom: 50, left: 60 },
   };
 
   const svgRef = useRef(null);
@@ -53,8 +57,16 @@ const StockGraphSvg = ({
       d3.select("svg")
       .selectAll("*")
       .remove()
-
   }
+
+  function cleanupBars(){
+    if(!isGrowthData){
+      d3.select("svg")
+      .selectAll(".mybar")
+      .remove()
+    }
+
+}
 
   function drawGraph(dataInput, isGrowthData) {
 
@@ -149,7 +161,11 @@ const StockGraphSvg = ({
       const yAxisGroup = svg
         .append("g")
         .call(yAxis)
-        .attr("transform", `translate(${margin.left - 10}, -${margin.top})`);
+        .attr("transform", `translate(${margin.left - 10}, -${margin.top})`)
+        .style("opacity", 0)
+        .transition(900)
+        .style("opacity", 1)
+
 
       yAxisGroup.select(".domain").remove();
       yAxisGroup.selectAll("line").attr("stroke", "black");
@@ -157,6 +173,14 @@ const StockGraphSvg = ({
         .selectAll("text")
         .attr("color", "black")
         .attr("font-size", "0.75rem");
+
+
+        d3.select("#tooltipNew").style("opacity", 0)
+ 
+
+
+
+
 
       // const lineTicker = d3
       let lineTicker = d3
@@ -178,49 +202,71 @@ const StockGraphSvg = ({
 
 
 
-        const yScaleGrowth = d3
-        .scaleLinear()
-        .domain(d3.extent(allGrowthValues))
-        .range([height, 0]);
+
+          if(isGrowthData){
+            svg.selectAll("mybar")
+            .data(formattedData)
+            .enter()
+            .append("rect")
+            .attr("x", (d) => xScale(d.date))
+            .attr("y", (d,i)=> {
+              if(d.alpha <0){
+                return yScale(d.spy_growth)- margin.top
+              }else{
+                return yScale(d.ticker_growth)- margin.top
+              }
+            })
+            .attr("width", 12)
+            .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth) - yScale(d.spy_growth) )))
+            .attr("fill", (d)=>{
+              if(d.alpha <0){
+                return "red"
+              }else{
+                return "green"
+              }
+            })
+            .style("opacity", 0)
+            .attr("id", (d,i)=> `${d.alpha}`)
+            .raise()
+            .on('mouseover', function(d) {
+
+             const currentRectSelection =  d3.select(this)
+             const xPoz = currentRectSelection._groups[0][0].x.baseVal.value
+              const tooltipXBuffer = 50
+
+        d3.select("#tooltipNew")
+        .style("left", `${xPoz+tooltipXBuffer}px`)
+        .transition(200)
+        .style("opacity", 1)
+
+               d3.select(this)
+              .raise()
+              .transition(100)
+              .style("opacity", 1)
+              // .style("background-color","#819FFF" )
+              // .style("color","#819FFF" )
+              .style("backgroundColor","#819FFF" )
+
+              d3.select("#tooltipText")
+              .text(d.target.id)
 
 
+          })
+          .attr("rx", 6)
+          .attr("ry", 6)
+          .on("mouseout", function(d){
 
-        svg.selectAll("mybar")
-        .data(formattedData)
-        .enter()
-        .append("rect")
-        .attr("x", (d) => xScale(d.date))
-        .attr("y", (d,i)=> {
-          if(d.alpha <0){
-            return yScale(d.spy_growth)- margin.top
-          }else{
-            return yScale(d.ticker_growth)- margin.top
+             d3.select(this)
+            .transition(100)
+            .style("opacity", 0)
+
+            d3.select("#tooltipNew")
+            .transition(200)
+            .style("opacity", 0)
+
+          })
           }
-        })
-        .attr("width", 12)
-        .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth) - yScale(d.spy_growth) )))
-        .attr("fill", "green")
-        // .style("opacity", 1)
-        .style("opacity", 0)
-        .attr("id", (d,i)=> `value ${d.alpha}`)
-        .raise()
-        .on('mouseover', function(d) {
-          setMouseOverValue(d.target.id)
-          d3.select(this)
-          // .moveToFront()
-          .raise()
-          .transition(100)
-          .style("opacity", 1)
 
-
-      })
-      .attr("rx", 6)
-      .attr("ry", 6)
-      .on("mouseout", function(d){
-        d3.select(this)
-        .transition(100)
-        .style("opacity", 0)
-      })
 
 
 
@@ -239,10 +285,9 @@ const StockGraphSvg = ({
         .attr("stroke-width", 3)
         .lower()
       }
+  
 
      
-
-
 
       const transactionColorMap={
         'Purchase': "#69b3a2", 
@@ -265,17 +310,24 @@ const StockGraphSvg = ({
 
 
     }
-  }
 
+
+  }
 
 
   return (
     <>
+    <div id="tooltipNew">
+      <p id="tooltipTitle">Current Alpha:</p>
+      {/* Current Alpha: */}
+        <div id="tooltipText"></div>
+       </div>
         <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg"
         >
 
 </svg>
-<Tooltip mouseOverValue = {mouseOverValue}/>
+
+
     </>
 
   );

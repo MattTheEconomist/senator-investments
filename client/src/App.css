@@ -60,6 +60,7 @@ margin-bottom: 5%;
 }
 
 #stockGraphContainer{
+  margin-top: 10%;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -136,18 +137,32 @@ margin-bottom: 5%;
 
 
 /* Tooltip  */
-#tooltipContainer{
+
+
+#tooltipNew{
   position: absolute;			
   text-align: center;			
-  width: 160px;					
-  height: 75px;					
-  padding: 2px;				
-  font: 12px sans-serif;		
-  background: lightsteelblue;	
-  border: 0px;		
-  border-radius: 8px;			
-  pointer-events: none;	
+  /* width: 160px;					
+  height: 50px;					 */
+  /* padding: 2px;		 */
+  margin-top: -2%; 
+  background-color: #819FFF;
+
+  width: 110px
+  /* padding: -15% */
+  /* padding-top: -10em; */
+  /* padding-top: -20px; */
 }
+
+#tooltipTitle{
+  margin-top: 5px; 
+  margin-right: 5px;
+  margin-left: 5px;
+
+}
+
+
+
 
 
 

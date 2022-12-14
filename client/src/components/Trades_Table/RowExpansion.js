@@ -9,7 +9,7 @@ const RowExpansion = ({    sequence,
 
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isGrowthData, setIsGrowthData ] = useState(false)
+  const [isGrowthData, setIsGrowthData ] = useState(true)
   const [stockData, setStockData] = useState([])
   const [isFetchingStockData, setIsFetchingStockData] = useState(false)
   const [secondTrigger, setSecondTrigger] = useState(false)
