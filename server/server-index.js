@@ -190,3 +190,19 @@ app.get("/historical/:ticker/:startDate/:senatorId", async (req, res) => {
     console.error(error.message);
   }
 });
+
+
+// unique senators 
+
+
+app.get("/senators-unique", async (req, res) => {
+  try {
+ 
+    const senatorInfo = await pool.query(
+      "SELECT * from senator_info"
+    );
+    res.json(senatorInfo.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});

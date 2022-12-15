@@ -75,7 +75,7 @@
 
   #stockIndexLine{
     width: 50px; 
-    height: 5px;
+    height: 4px;
     background-color: black;
 
     margin-top: 8px;
@@ -84,7 +84,7 @@
 
   #spyIndexLine{
     width: 50px; 
-    height: 5px;
+    height: 4px;
     margin-top: 8px;
     background-color: blue;
     margin-right: 1em;

@@ -1,12 +1,31 @@
+import { json } from "d3";
 import React from "react";
 import { useState, useEffect } from "react";
 
 const NameDropdown = ({ senatorData, isFetching, fetchSenatorData }) => {
   const [nameSelected, setNameSelected] = useState("'Sheldon Whitehouse'");
+  const [allSenatorNames, setAllSenatorNames] = useState([])
+
 
   useEffect(() => {
     fetchSenatorData(nameSelected);
+    fetchSenatorNames()
   }, []);
+
+
+
+  async function fetchSenatorNames() {
+    try {
+      const fetchString = `http://localhost:5001/senators-unique`;
+      const response = await fetch(fetchString);
+      const jsonData = await response.json();
+      console.log("name dropdown", jsonData)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
 
   const senatorNameList = [
     "Shelley M Capito",
