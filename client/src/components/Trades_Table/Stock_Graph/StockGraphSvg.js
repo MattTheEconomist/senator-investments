@@ -4,6 +4,9 @@ import { useRef } from "react";
 import { processStockData 
  } from "../../../Utilities/ProcessStockData";
 
+//  import "../../StockGraph.css" ; 
+ import "../RowExpansion.css"
+
 
 const StockGraphSvg = ({   
   stockData,
@@ -121,7 +124,7 @@ const StockGraphSvg = ({
       const spyGrowthValues = formattedData.map((row)=> row.spy_growth)
       const allGrowthValues = spyGrowthValues.concat(tickerGrowthValues)
 
-      console.log("stock graph", formattedData)
+      // console.log("stock graph", formattedData)
 
 
 
@@ -216,7 +219,7 @@ const StockGraphSvg = ({
                 return yScale(d.ticker_growth)- margin.top
               }
             })
-            .attr("width", 12)
+            .attr("width", 14)
             .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth) - yScale(d.spy_growth) )))
             .attr("fill", (d)=>{
               if(d.alpha <0){
