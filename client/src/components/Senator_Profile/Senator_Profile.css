@@ -1,0 +1,68 @@
+
+
+
+#senatorProfileOutter{
+    display: grid; 
+    grid-template-rows: 40px 200px 200px;
+    /* grid-template-columns: 750px 350px; */
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+
+#senatorNameTitleContainer{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    background-color: aqua;
+}
+
+
+#senatorNameTitle{
+
+}
+
+#allCardsContainer{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    /* background-color: teal; */
+    display: flex;
+    flex-direction: row;
+    padding-left: 2em;
+
+    }
+
+.senatorProfileCard{
+    width: 16em ;
+    margin-left: 1em; 
+    border: 1px solid black
+
+}
+
+#tradesBarGraphContainer{
+    /* background-color: blue; */
+    border: 1px solid black; 
+    margin-top: 1em; 
+    width: 50em; 
+    margin-left: 1em; 
+
+}
+
+#senatorInfoCardContainer{
+
+    /* background-color: red */
+
+
+
+}
+
+#executorGraphCardContainer{
+    /* background-color: greenyellow */
+
+}
+
+#overallAlphaCardContainer{
+    /* background-color: green; */
+
+}
+
+
