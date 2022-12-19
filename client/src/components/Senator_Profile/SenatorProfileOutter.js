@@ -7,7 +7,7 @@ import ExecutorGraphCard from "./ExecutorGraphCard"
 import './Senator_Profile.css'
 
 
-const SenatorProfileOutter = ({nameSelected})=>{
+const SenatorProfileOutter = ({nameSelected, senatorData, isFetching})=>{
     let nameSelectedFormatted = nameSelected.replace("'","")
      nameSelectedFormatted = nameSelectedFormatted.replace("'","")
 
@@ -17,16 +17,16 @@ const SenatorProfileOutter = ({nameSelected})=>{
     return ( <div id="senatorProfileOutter">
         <div id="senatorNameTitleContainer">
 
-        <h3 id="senatorNameTitle">{nameSelectedFormatted }</h3>
+        <h3 id="senatorNameTitle">{nameSelectedFormatted}</h3>
         </div>
     <div id="allCardsContainer">
 
-        <SenatorInfoCard />
-        <OverallAlphaCard />
-        <ExecutorGraphCard />
+        <SenatorInfoCard senatorData={senatorData} isFetching={isFetching}/>
+        <OverallAlphaCard senatorData={senatorData}/>
+        <ExecutorGraphCard senatorData={senatorData}/>
 
         </div>
-        <TradesBarGraph /> 
+        <TradesBarGraph senatorData={senatorData}/> 
 
 
     </div>

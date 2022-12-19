@@ -13,7 +13,6 @@ const SingleSenator = () => {
 
 
   async function fetchSenatorData(senatorNameFetch) {
-    // console.log(senatorNameFetch)
     setIsFetching(true);
     try {
       const fetchString = `http://localhost:5001/trades?senator=${senatorNameFetch}&type='Purchase'`;
@@ -35,7 +34,7 @@ const SingleSenator = () => {
         nameSelected = {nameSelected}
         setNameSelected = {setNameSelected}
       />
-      <SenatorProfileOutter nameSelected = {nameSelected}/>
+      <SenatorProfileOutter nameSelected = {nameSelected} senatorData={senatorData} isFetching={isFetching}/>
       <TradesTable tradeData={senatorData} isFetching={isFetching} />
     </>
   );

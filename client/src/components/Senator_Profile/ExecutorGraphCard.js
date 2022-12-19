@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const ExecutorGraphCard = ({})=>{
+const ExecutorGraphCard = ({senatorData})=>{
 
     return (<div id="executorGraphCardContainer" className="senatorProfileCard">
         <p>executorGraphCard </p>
