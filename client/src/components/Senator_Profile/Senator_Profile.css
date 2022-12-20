@@ -3,7 +3,7 @@
 
 #senatorProfileOutter{
     display: grid; 
-    grid-template-rows: 40px 200px 200px;
+    grid-template-rows: 40px 300px 200px;
     /* grid-template-columns: 750px 350px; */
     margin-top: 1%;
     margin-bottom: 2%;
@@ -62,6 +62,8 @@
 #executorGraphCardContainer{
     /* background-color: greenyellow */
 
+
+
 }
 
 #overallAlphaCardContainer{
@@ -113,5 +115,18 @@
 #pieGraphContainer{
     width: 250px;
     height: 100px; 
-    border: 1px solid black
+    border: 1px solid black; 
+    display: flex;
+    justify-content: center;
+
+
 }
+
+
+
+/* #deleteMe{
+    Self: #49A35E;
+    Joint: #F07F55 ;
+    Spouse: #2979A3 ;
+    Child: #48B7F0;
+} */

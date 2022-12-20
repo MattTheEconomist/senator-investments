@@ -6,10 +6,7 @@ const PieGraph= ({
     valueCounts
 })=>{
 
-    // console.log("pie graph", valueCounts)
     console.log("pie graph", valueCounts)
-    // const valueCounts = {Self: 108, Joint: 91, Spouse: 47, Child: 43}
-
 
 
 
@@ -18,7 +15,6 @@ const PieGraph= ({
         drawGraph()
 
     }, [valueCounts])
-    // }, [])
 
     const dimensions = {
         width: 50,
@@ -31,33 +27,36 @@ const PieGraph= ({
         const svgWidth = width + margin.left + margin.right;
         const svgHeight = height + margin.top + margin.bottom;
 
-      const svgRef = useRef(null);
+    //   const svgRef = useRef(null);
 
       const radius= 200
 
+
+      const colorMap = {
+        Self: "#49A35E", 
+        Joint: "#F07F55", 
+        Spouse: "#2979A3", 
+        Child: "#48B7F0"
+      }
+
       function cleanupOldGraph(){
-        d3.select("svg")
+        d3.select("#pieGraphSvg")
         .selectAll("*")
         .remove()
       }
 
 
       function drawGraph(){
-          const svgEl = d3.select(svgRef.current);
+        //   const svgEl = d3.select(svgRef.current);
 
 
               const data = Object.values(valueCounts);
 
               const keys  = Object.keys(valueCounts); 
 
-              const colorMap = {
-                Self: "#49A35E", 
-                Joint: "#F07F55", 
-                Spouse: "#2979A3", 
-                Child: "#48B7F0"
-              }
 
-              var svg = d3.select("svg"),
+            //   var svg = d3.select("svg"),
+              var svg = d3.select("#pieGraphSvg"),
                   width = svg.attr("width"),
                   height = svg.attr("height"),
                   radius = Math.min(width, height) / 2,
@@ -66,16 +65,14 @@ const PieGraph= ({
 
               const colorList =  keys.map(current=>colorMap[current])
           
-            //   var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c']);
               var color = d3.scaleOrdinal(colorList);
-            //   const color = colorList
           
               // Generate the pie
               var pie = d3.pie();
           
               // Generate the arcs
               var arc = d3.arc()
-                          .innerRadius(0)
+                          .innerRadius(radius/2)
                           .outerRadius(radius);
           
               //Generate groups
@@ -94,7 +91,9 @@ const PieGraph= ({
       }
 
 
-    return <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg"
+    return <svg 
+    // ref={svgRef}
+     width={svgWidth} height={svgHeight} id="pieGraphSvg"
     ></svg>
 }
 

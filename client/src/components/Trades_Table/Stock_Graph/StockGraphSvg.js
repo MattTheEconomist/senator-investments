@@ -57,7 +57,8 @@ const StockGraphSvg = ({
   }
 
     function cleanupOldGraph(){
-      d3.select("svg")
+      // d3.select("svg")
+      d3.select("#stockGraphSvg")
       .selectAll("*")
       .remove()
   }
@@ -75,7 +76,8 @@ const StockGraphSvg = ({
 
 
 
-    const svgEl = d3.select(svgRef.current);
+    // const svgEl = d3.select(svgRef.current);
+    const svgEl = d3.select("#stockGraphSvg");
 
     if (svgEl) {
       svgEl.selectAll("*").remove();
@@ -108,7 +110,7 @@ const StockGraphSvg = ({
 
     if (formattedData === "no data") {
     // if (formattedData.length < 1) {
-      d3.select("svg")
+      svgEl 
         .append("text")
         .text("no data stock price. . .")
         .attr("x", 50)
@@ -193,7 +195,7 @@ const StockGraphSvg = ({
 
       
       
-      d3.select("svg")
+        svgEl 
         .append("path") // add a path to the existing svg
         .datum(formattedData)
         .attr("d", lineTicker)
@@ -207,6 +209,7 @@ const StockGraphSvg = ({
 
 
           if(isGrowthData){
+            // svgEl.selectAll("mybar")
             svg.selectAll("mybar")
             .data(formattedData)
             .enter()
@@ -279,7 +282,8 @@ const StockGraphSvg = ({
       .y((d) => yScale(d.spy_growth))
 
       if(isGrowthData){
-        d3.select("svg")
+        // d3.select("svg")
+        svgEl 
         .append("path") // add a path to the existing svg
         .datum(formattedData)
         .attr("d", lineSpy)
@@ -300,7 +304,10 @@ const StockGraphSvg = ({
       }
 
 
-        d3.select("svg")
+        // d3.select("svg")
+        // d3.select("svg")
+        // svg
+        svgEl
         .append('g')
         .selectAll("dot")
         .data(transactionsData )
