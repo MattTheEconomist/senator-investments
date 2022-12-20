@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: row;
     padding-left: 2em;
+    margin-top: 1em;
 
     }
 
@@ -49,9 +50,12 @@
 
 #senatorInfoCardContainer{
 
+    /* font-size: 0.75em; */
+
     /* background-color: red */
-
-
+    width: 18em; 
+    margin-left: -1em; 
+    padding-left: 1em;
 
 }
 
@@ -62,7 +66,52 @@
 
 #overallAlphaCardContainer{
     /* background-color: green; */
+    /* padding: 1em;  */
+    /* padding: -1em 0em 0em 1em; */
+    padding-top: -6em; 
+    padding-right:  1em; 
+    align-items: center; 
+    justify-content: middle;
+
 
 }
 
+/* 
+#alphaCardTitle{
+    margin-top: 0.5em;
+    margin-left: 1em; 
+    font-size: large;
+    font-weight: bold;
+} */
 
+.cardTitle{
+    margin-top: 0.5em;
+    margin-left: 1em; 
+    font-size: large;
+    font-weight: bold;
+}
+
+#alphaCardValue{
+    font-size: 3.5em;
+    margin-left: 0.5em;
+
+}
+
+.greenText{
+    color: green
+}
+
+.yellowText{
+    color: yellow
+}
+
+.greyText{
+    color: grey
+}
+
+
+#pieGraphContainer{
+    width: 250px;
+    height: 100px; 
+    border: 1px solid black
+}
