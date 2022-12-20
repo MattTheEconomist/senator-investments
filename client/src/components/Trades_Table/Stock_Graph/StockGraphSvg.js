@@ -304,9 +304,6 @@ const StockGraphSvg = ({
       }
 
 
-        // d3.select("svg")
-        // d3.select("svg")
-        // svg
         svgEl
         .append('g')
         .selectAll("dot")

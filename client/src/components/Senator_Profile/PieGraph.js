@@ -91,10 +91,39 @@ const PieGraph= ({
       }
 
 
-    return <svg 
-    // ref={svgRef}
+      function createIndexGridCells(valueCounts){
+        if(!valueCounts){
+            return <></>
+        }
+
+        const rez = Object.keys(valueCounts).map(exec=> <div className="indexKeyCell_pie">
+                <div className="indexColor_pie" style={{backgroundColor:colorMap[exec] }}></div>
+                <div className="indexKeyText_pie">{exec}</div>
+            </div>
+            
+            )
+
+
+        console.log(rez)
+
+        return rez
+      }
+
+      const indexGridCells = createIndexGridCells(valueCounts)
+
+    return  <>
+
+<div id="pieGraphContainer">
+
+
+    <svg 
      width={svgWidth} height={svgHeight} id="pieGraphSvg"
     ></svg>
+
+    </div>
+    <div id="executorIndexGrid">{ indexGridCells}</div>
+    
+    </>
 }
 
 

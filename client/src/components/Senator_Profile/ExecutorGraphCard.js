@@ -27,8 +27,6 @@ const ExecutorGraphCard = ({senatorData,  isFetching})=>{
 
         setValueCounts(rez)
 
-        // console.table(rawData)
-        // console.log(rez)
     }
 
 
@@ -36,10 +34,7 @@ const ExecutorGraphCard = ({senatorData,  isFetching})=>{
 
     return (<div id="executorGraphCardContainer" className="senatorProfileCard">
            <p className="cardTitle">Executor Distribution</p>
-           <div id="pieGraphContainer">
                 <PieGraph valueCounts={valueCounts} /> 
-
-           </div>
     </div>
 
     )       

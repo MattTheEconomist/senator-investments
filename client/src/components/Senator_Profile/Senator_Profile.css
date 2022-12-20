@@ -59,12 +59,6 @@
 
 }
 
-#executorGraphCardContainer{
-    /* background-color: greenyellow */
-
-
-
-}
 
 #overallAlphaCardContainer{
     /* background-color: green; */
@@ -112,15 +106,47 @@
 }
 
 
-#pieGraphContainer{
-    width: 250px;
-    height: 100px; 
-    border: 1px solid black; 
+#executorGraphCardContainer{
+    /* background-color: greenyellow */
+
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 
 
 }
+
+
+#pieGraphContainer{
+    width: 250px;
+    height: 100px; 
+    /* border: 1px solid black;  */
+    display: flex;
+    justify-content: center;
+}
+
+#executorIndexGrid{
+    /* background-color: blue; */
+    margin-top: 1em;
+}
+
+#executorIndexGrid{
+    margin-left: 1em;
+    margin-top: 3em;
+}
+
+.indexKeyCell_pie{
+    display: flex;
+
+}
+
+
+.indexColor_pie{
+    width: 9px; 
+    height: 9px ; 
+    margin-top: 0.35em;
+    margin-right: 0.25em;
+}
+
 
 
 
