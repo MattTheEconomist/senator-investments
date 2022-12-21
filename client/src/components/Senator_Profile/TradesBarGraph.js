@@ -1,10 +1,13 @@
 import React from "react";
 import * as d3 from "d3";
+// import preProcessData from "./ProcessBarGraphData";
 import { useState, useEffect, useRef } from "react";
 
 const TradesBarGraph = ({senatorData,  isFetching})=>{
 
     const [formattedData, setFormattedData] = useState([])
+
+
 
 
     
@@ -13,6 +16,7 @@ const TradesBarGraph = ({senatorData,  isFetching})=>{
         drawGraph()
 
         preProcessData(senatorData)
+
 
     }, [senatorData,  isFetching])
 
@@ -33,6 +37,10 @@ const TradesBarGraph = ({senatorData,  isFetching})=>{
 
 
     function preProcessData(rawData){
+
+        if(!rawData){
+            return []
+        }
 
 
         // let rez = rawData
@@ -59,58 +67,76 @@ const TradesBarGraph = ({senatorData,  isFetching})=>{
 
 
 
-
-        let quarterlyChunks_final = {}
-
             let quarterKeys  = Object.keys(quarterlyChunks)
 
+
             //sort keys
-            // quarterKeys = quarterKeys.sort((a,b)=> {return b > a})
-            quarterKeys = quarterKeys.sort()
+                quarterKeys = quarterKeys.sort()
 
+                const startQuarter = quarterKeys[0]
+                const endQuarter = quarterKeys.pop()
 
-
-                    // this is a mess, fill it in the long way instead of iteratively 
-
-
-
-
-            for(let idx=0; idx< quarterKeys.length; idx++){
-               const  keyQuarter = quarterKeys[idx]
-                const keyQuarter_q = parseInt(keyQuarter.split("_")[1])
-                const keyQuarter_y = parseInt(keyQuarter.split("_")[0])
-
-                    let  preceedingQuarter=""
-                if(keyQuarter_q===1){
-                    preceedingQuarter= `${keyQuarter_y-1}_${4}`
-                }
-                else{
-                    preceedingQuarter= `${keyQuarter_y}_${keyQuarter_q-1}`
+                if(!startQuarter){
+                    return []
                 }
 
-                if(!quarterlyChunks[preceedingQuarter]){
+                const yearDiff = parseInt(endQuarter.split("_")[0]) - parseInt(startQuarter.split("_")[0])+1
 
+                const totalQuarters = yearDiff*4
 
+                let previousQuarter = startQuarter
+
+                let allQuarters = [startQuarter]
+
+                for (let q=1; q<totalQuarters; q++){
+                    previousQuarter = allQuarters[q-1]
+                    const previousQuarter_q = parseInt(previousQuarter.split("_")[1])
+                    const previousQuarter_y = parseInt(previousQuarter.split("_")[0])
+
+                    let currentQuarter = ''
+                                        
+                    if(previousQuarter_q===4){
+                        currentQuarter= `${previousQuarter_y+1}_1`
+                    }else{
+                        currentQuarter= `${previousQuarter_y}_${previousQuarter_q+1}`
+                    }
+
+                    allQuarters.push(currentQuarter)
                 }
 
 
-               const currentTransactionList = quarterlyChunks[keyQuarter]
+                let quarterlyChunks_final = {}
 
-
-
-                const purchaseCount = currentTransactionList.filter(trans=> trans==="Purchase").length
-                const saleCount =  currentTransactionList.length - purchaseCount
-                quarterlyChunks_final[keyQuarter] = {"Purchase": purchaseCount, "Sale":saleCount}
-            }
                 
-            // console.log(quarterlyChunks_final)
+            
+                for (let g=1; g<allQuarters.length; g++){
+                    const currentQuarter = allQuarters[g]
 
+                    if(!quarterlyChunks[currentQuarter]){
+                        quarterlyChunks_final[currentQuarter] = {"Purchase": 0, "Sale":0}
+                    }else{
+                        const currentTransactionsList = quarterlyChunks[currentQuarter]
+                        const purchaseCount = currentTransactionsList.filter(trans=> trans==="Purchase").length
+                        const saleCount =  currentTransactionsList.length - purchaseCount
+                        quarterlyChunks_final[currentQuarter] = {"Purchase": purchaseCount, "Sale":saleCount}
+                        
+
+                    }
+
+                }
+
+                console.log(quarterlyChunks_final, 'quarterlyChunks_final')
+
+        // setFormattedData(quarterlyChunks_final)
+        // return
         setFormattedData(quarterlyChunks_final)
 
     }
 
 
     function drawGraph(formattedData){
+
+        console.log("CALLING DRAW GRAPH")
         if(!formattedData){
             return <></>
         }
@@ -126,8 +152,18 @@ const TradesBarGraph = ({senatorData,  isFetching})=>{
         const xScale = d3
         .scaleTime()
         .domain(d3.extent(dates))
-        // .tickFormat(quarter)
         .range([margin.left, svgWidth - margin.right]);
+
+
+
+        const xAxis = d3.axisBottom(xScale).ticks(10).tickSize(10);
+
+            // const xAxisGroup = svg
+            const xAxisGroup = svgEl
+                .append("g")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(xAxis);
+
 
 
         
