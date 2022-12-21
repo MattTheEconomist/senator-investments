@@ -20,7 +20,7 @@ const SenatorInfoCard = ({senatorData,  isFetching})=>{
                 infoObjectLocal['Total Purchases'] = totalTransactions
         
                 const mostRecentTransaction  = rawData[0].transaction_date
-                infoObjectLocal['Most Recent Purchases'] = mostRecentTransaction   
+                infoObjectLocal['Most Recent Purchase'] = mostRecentTransaction   
             }       
 
         setInfoObject(infoObjectLocal)

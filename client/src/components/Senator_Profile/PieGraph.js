@@ -6,9 +6,6 @@ const PieGraph= ({
     valueCounts
 })=>{
 
-    console.log("pie graph", valueCounts)
-
-
 
     useEffect(()=>{
         cleanupOldGraph()
@@ -96,15 +93,14 @@ const PieGraph= ({
             return <></>
         }
 
-        const rez = Object.keys(valueCounts).map(exec=> <div className="indexKeyCell_pie">
-                <div className="indexColor_pie" style={{backgroundColor:colorMap[exec] }}></div>
-                <div className="indexKeyText_pie">{exec}</div>
+        const rez = Object.keys(valueCounts).map((exec, index)=> <div key={`pieCell${index}`} className="indexKeyCell_pie">
+                <div key={`pieColor${index}`} className="indexColor_pie" style={{backgroundColor:colorMap[exec] }}></div>
+                <div key={`pieText${index}`}className="indexKeyText_pie">{exec}</div>
             </div>
             
             )
 
 
-        console.log(rez)
 
         return rez
       }

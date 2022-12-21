@@ -16,10 +16,10 @@
     background-color: aqua;
 }
 
-
+/* 
 #senatorNameTitle{
 
-}
+} */
 
 #allCardsContainer{
     grid-column-start: 1;
@@ -111,6 +111,9 @@
 
     display: flex;
     flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: middle; */
+    align-items: center;
 
 
 }
@@ -130,14 +133,30 @@
 }
 
 #executorIndexGrid{
-    margin-left: 1em;
-    margin-top: 3em;
+    /* margin-left: 3.3em; */
+    margin-top: 4em;
+    display: grid; 
+    grid-template-columns: 75px 75px;
+    grid-template-rows: 20px 20px;
+
 }
 
 .indexKeyCell_pie{
     display: flex;
+}
+
+/* #indexKeyCell_pie01{
 
 }
+#indexKeyCell_pie02{
+    
+}
+#indexKeyCell_pie03{
+    
+}
+#indexKeyCell_pie04{
+    
+} */
 
 
 .indexColor_pie{
