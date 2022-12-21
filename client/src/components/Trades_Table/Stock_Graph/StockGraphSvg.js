@@ -21,6 +21,7 @@ const StockGraphSvg = ({
   // const [xHover, setXHover] = useState(0)
 
  useEffect(()=>{
+  cleanupOldGraph()
   drawGraph(stockData, isGrowthData)
  }, [stockData])
 

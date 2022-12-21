@@ -52,11 +52,8 @@ const NameDropdown = ({ senatorData, isFetching, fetchSenatorData
 
 
   const onSelect = async (e) => {
-    // const nameSelected = e.target.value;
     e.preventDefault();
      setNameSelected (e.target.value)
-    // const column = "senator";
-
 
     fetchSenatorData(nameSelected);
   };
