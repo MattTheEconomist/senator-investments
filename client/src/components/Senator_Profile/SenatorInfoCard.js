@@ -34,6 +34,7 @@ const SenatorInfoCard = ({senatorData,  isFetching})=>{
     >{`${currentKey}: ${infoObject[currentKey]}`}</p>)
 
     return (<div id="senatorInfoCardContainer" className="senatorProfileCard">
+         <p  className="cardTitle">Trade Info</p>
         <div>{infoCardData}</div>
 
     </div>

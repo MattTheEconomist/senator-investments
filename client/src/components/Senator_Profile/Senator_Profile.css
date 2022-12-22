@@ -1,3 +1,11 @@
+:root{
+    --darkBlue: #2979A3; 
+    --lightBlue:  #48B7F0; 
+    --myOrange: #F07F55; 
+    --myGreen: #49A35E; 
+    --backgroundBlue:rgba(72, 184, 240, 0.213); 
+}
+
 
 
 
@@ -14,7 +22,14 @@
 #senatorNameTitleContainer{
     grid-column-start: 1;
     grid-column-end: 2;
-    background-color: aqua;
+    padding-left: 2em;
+    background-image: linear-gradient(to right, var(--lightBlue),var(--darkBlue));
+    /* padding-bottom: 1em; */
+    display: flex; 
+    /* justify-content: middle; */
+    align-items: center;
+
+
 }
 
 /* 
@@ -25,20 +40,29 @@
 #allCardsContainer{
     grid-column-start: 1;
     grid-column-end: 2;
-    /* background-color: teal; */
+    background-color: var(--backgroundBlue);
+    /* background-color: red;  */
     display: flex;
     flex-direction: row;
+    /* margin-top: 1em; */
     padding-left: 2em;
-    margin-top: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em
+    
 
     }
 
 .senatorProfileCard{
     width: 16em ;
     margin-left: 1em; 
-    border: 1px solid black
+     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border-radius: 10px;
+    background-color: white;
+
 
 }
+
+
 
 #tradesBarGraphContainer{
     /* background-color: blue; */
@@ -48,6 +72,8 @@
     margin-left: 1em; 
 
 }
+
+
 
 #senatorInfoCardContainer{
 
@@ -95,11 +121,11 @@
 }
 
 .greenText{
-    color: green
+    color: var(--myGreen)
 }
 
 .yellowText{
-    color: yellow
+    color: var(--myOrange)
 }
 
 .greyText{
