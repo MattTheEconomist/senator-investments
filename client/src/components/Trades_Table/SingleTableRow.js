@@ -8,7 +8,9 @@ const SingleTableRow = ({
   sequence,
   rowData,
   rowSequenceClicked,
+  setRowSequenceClicked, 
   identifyRowClicked,
+
 
 }) => {
   const [isHovering, setIsHovering] = useState(false);
@@ -58,6 +60,7 @@ const SingleTableRow = ({
         sequence={sequence}
         rowData={rowData}
         rowSequenceClicked={rowSequenceClicked}
+        setRowSequenceClicked = {setRowSequenceClicked}
 
       />
     </>

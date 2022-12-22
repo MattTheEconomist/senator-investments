@@ -3,13 +3,17 @@ import React from "react";
 import TableHeader from "./TradesTableHeader";
 import AllTableRows from "./AllTableRows";
 
-const TradesTable = ({ tradeData, isFetching }) => {
+const TradesTable = ({ tradeData, isFetching, 
+  nameSelected
+
+}) => {
   const [tradeDataOrdered, setTradeDataOrdered] = useState([]);
   const [reorderTrigger, setReorderTrigger] = useState(false);
 
   useEffect(() => {
     setTradeDataOrdered(tradeData);
     setReorderTrigger(false);
+    console.log("trades table:", nameSelected)
   }, [isFetching, tradeData, reorderTrigger]);
   // }, []);
 

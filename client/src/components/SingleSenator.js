@@ -9,7 +9,8 @@ import SenatorProfileOutter from "./Senator_Profile/SenatorProfileOutter";
 const SingleSenator = () => {
   const [senatorData, setSenatorData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-   const [nameSelected, setNameSelected] = useState("'Sheldon Whitehouse'");
+  //  const [nameSelected, setNameSelected] = useState("'Sheldon Whitehouse'");
+   const [nameSelected, setNameSelected] = useState("'Thomas H Tuberville'");
 
 
   async function fetchSenatorData(senatorNameFetch) {
@@ -35,7 +36,10 @@ const SingleSenator = () => {
         setNameSelected = {setNameSelected}
       />
       <SenatorProfileOutter nameSelected = {nameSelected} senatorData={senatorData} isFetching={isFetching}/>
-      <TradesTable tradeData={senatorData} isFetching={isFetching} />
+      <TradesTable tradeData={senatorData} 
+      isFetching={isFetching} 
+      nameSelected = {nameSelected}
+      />
     </>
   );
 };

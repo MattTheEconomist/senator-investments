@@ -7,6 +7,7 @@ import "./RowExpansion.css"
 const RowExpansion = ({    sequence,
    rowData,
     rowSequenceClicked, 
+    setRowSequenceClicked
 
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -87,6 +88,8 @@ const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}
 
 }
 
+
+
 const graphIndex=(
 <div id="graphIndexContainer">
   <div className='indexRow'> 
@@ -120,8 +123,21 @@ const graphIndex=(
 )
 
 
+function minimizeRow(){
+  console.log("clikk")
+  setRowSequenceClicked(-2)
+}
+
+
+
   const expansionDiv = isExpanded ? (
+    <>
+
+   <div id="minimizeButtonContainer">
+    <button type="button" id="minimizeButton" onClick={minimizeRow}>x</button>
+     </div> 
     <div id="expansionDiv">
+
       <div id="criticalInfoCard">
         <p id="criticalInfoTitle">Transaction Information</p>
 
@@ -136,7 +152,12 @@ const graphIndex=(
        />
 
 
+
+
 <div id="stockGraphContainer_outter">
+{/* <div id="minimizeButtonContainer">
+    <button type="button" id="minimizeButton" onClick={minimizeRow}>-</button>
+     </div> */}
 <StockGraphSvg
         transaction_date={transaction_date}
         stockData = {stockData}
@@ -147,6 +168,8 @@ const graphIndex=(
 
 </div>
     </div>
+
+    </>
   ) : (
     <></>
   );

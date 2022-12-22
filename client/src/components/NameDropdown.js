@@ -13,6 +13,11 @@ const NameDropdown = ({ senatorData, isFetching, fetchSenatorData
     // console.log(allSenatorNames)
   }, []);
 
+  useEffect(() => {
+    fetchSenatorData(nameSelected);
+    // console.log(allSenatorNames)
+  }, [nameSelected]);
+
 
 
   async function fetchSenatorNames() {

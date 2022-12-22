@@ -26,7 +26,7 @@ const SenatorProfileOutter = ({nameSelected, senatorData, isFetching})=>{
         <ExecutorGraphCard senatorData={senatorData}/>
 
         </div>
-        <TradesBarGraph senatorData={senatorData}/> 
+        {/* <TradesBarGraph senatorData={senatorData}/>  */}
 
 
     </div>

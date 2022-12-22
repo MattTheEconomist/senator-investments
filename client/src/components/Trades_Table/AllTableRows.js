@@ -9,8 +9,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
 
   useEffect(()=>{
     setRowSequenceClicked(-2)
-
-  }, [reorderTrigger])
+  }, [reorderTrigger, isFetching])
 
 
   useEffect(() => {
@@ -61,6 +60,7 @@ const AllTableRows = ({ isFetching, tradeDataOrdered, reorderTrigger }) => {
             rowData={rowData}
             sequence={sequence}
             rowSequenceClicked={rowSequenceClicked}
+            setRowSequenceClicked = {setRowSequenceClicked}
             identifyRowClicked={identifyRowClicked}
             key={`singleRow${sequence}`}
   

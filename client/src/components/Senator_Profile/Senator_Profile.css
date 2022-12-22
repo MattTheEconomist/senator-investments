@@ -3,7 +3,8 @@
 
 #senatorProfileOutter{
     display: grid; 
-    grid-template-rows: 40px 300px 200px;
+    /* grid-template-rows: 40px 300px 200px; */
+    grid-template-rows: 40px 300px ; 
     /* grid-template-columns: 750px 350px; */
     margin-top: 1%;
     margin-bottom: 2%;
