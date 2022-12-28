@@ -4,10 +4,12 @@
 :root{
   --darkBlue: #2979A3; 
   --lightBlue:  #48B7F0; 
-  --myOrange: #F07F55; 
-  --myGreen: #49A35E; 
+  --myOrange: #F2B185; 
+  --blueGrey: #60668A; 
+  /* --myGreen: #49A35E;  */
   --backgroundBlue:rgba(72, 184, 240, 0.213); 
   --lightGrey:  #c7ced2; 
+  --datShadow: rgba(0, 0, 0, 0.16) 0px 0px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 
 }
 
@@ -88,11 +90,29 @@
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
-    background-color: green;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* background-color: var(--blueGrey); */
+    /* background-color: #F0A548;  */
+    /* background-color:#60668A; */
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: var(--datShadow)
+    
+    
+    /* color: white;  */
+
+
   
+  }
+
+  #criticalInfoTitle{
+    font-size: larger;
+  }
+
+  #criticalInfoList{
+    margin-top: 0.5em;
   }
 
   .cardListUnderItem{
@@ -117,6 +137,8 @@
     display: flex; 
     flex-direction: column;
     padding-top: 1em;
+    /* border: 1px solid black;  */
+    /* border-radius: 5px; */
   }
 
   .indexRow{
@@ -178,10 +200,15 @@
     grid-row-start: 4;
     grid-row-end: 4;
     padding-top: 1em;
-    background-color: #4ED4D2;
+    /* background-color: var(--myGreen); */
+    /* background-color: var(--blueGrey); */
+    /* background-color: #F0A548; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: var(--datShadow)
   
   }
   
@@ -191,9 +218,11 @@
       display : inline-block;
       width : 100px;
       height : 52px;
-      background-color: red;
+      /* background-color: red; */
+      background-color: #F0A548;
       border-radius: 30px;
-      border: 2px solid gray;
+      border: 2px solid grey;
+      /* border: 2px solid var(--lightGrey); */
   }
          
   /* After slide changes */
@@ -203,7 +232,8 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background-color: gray;
+      background-color: grey;
+      /* background-color:  2px solid grey; */
       top: 1px;
       left: 1px;
       transition:  all 0.5s;
@@ -212,7 +242,8 @@
   /* Toggle text */
   #toggleExplainerText {
       font-family: Arial, Helvetica, sans-serif;
-      font-weight: bold;
+      /* font-weight: bold; */
+      font-size: large;
       top: 40px; 
   }
          
@@ -223,7 +254,8 @@
          
   /* Checkbox checked toggle label bg color */
   .checkbox:checked + .toggle {
-      background-color: green;
+      /* background-color: #2178A3; */
+      background-color: #66CCFF;
   }
          
   /* Checkbox vanished */
@@ -270,8 +302,6 @@
     position: absolute;			
     text-align: center;			
     margin-top: 3%; 
-    /* background-color: var(--lightBlue); */
-    /* background-color: #F07F55; */
     border: 1px solid grey; 
     border-radius: 6px; 
     padding-bottom: 5px; 

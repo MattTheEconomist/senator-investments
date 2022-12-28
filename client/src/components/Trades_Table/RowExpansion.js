@@ -134,14 +134,14 @@ function minimizeRow(){
     <>
 
    <div id="minimizeButtonContainer">
-    <button type="button" id="minimizeButton" onClick={minimizeRow}>x</button>
+    <button type="button" id="minimizeButton" onClick={minimizeRow}>-</button>
      </div> 
     <div id="expansionDiv">
 
       <div id="criticalInfoCard">
         <p id="criticalInfoTitle">Transaction Information</p>
 
-        <ul id="yo">{cardListItems}</ul>
+        <ul id="criticalInfoList">{cardListItems}</ul>
       </div>
 
        {graphIndex}
