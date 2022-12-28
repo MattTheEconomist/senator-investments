@@ -155,9 +155,7 @@ function minimizeRow(){
 
 
 <div id="stockGraphContainer_outter">
-{/* <div id="minimizeButtonContainer">
-    <button type="button" id="minimizeButton" onClick={minimizeRow}>-</button>
-     </div> */}
+
 <StockGraphSvg
         transaction_date={transaction_date}
         stockData = {stockData}

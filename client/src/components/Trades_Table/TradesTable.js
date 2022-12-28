@@ -143,7 +143,8 @@ const TradesTable = ({ tradeData, isFetching,
     );
   });
 
-  // console.log('trades table', tableHeaders)
+
+
 
 
   return (

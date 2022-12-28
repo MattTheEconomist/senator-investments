@@ -184,9 +184,20 @@ const StockGraphSvg = ({
         d3.select("#tooltipNew").style("opacity", 0)
  
 
+        const lineColorMap={
+          'assetLine': '#2979A3', 
+          'spyLine': 'grey'
+        }
 
 
+        
 
+        // const transactionColorMap={
+        //   'Purchase': "#69b3a2", 
+        //   'Sale (Partial)': "#EB5542", 
+        //   'Sale (Full)': "#D43141",
+        //   'Exchange' : "grey"
+        // }
 
       // const lineTicker = d3
       let lineTicker = d3
@@ -201,7 +212,7 @@ const StockGraphSvg = ({
         .datum(formattedData)
         .attr("d", lineTicker)
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", lineColorMap.assetLine)
         .attr("stroke-width", 3)
         .attr("className", "lineTicker")
         .lower()
@@ -223,13 +234,15 @@ const StockGraphSvg = ({
                 return yScale(d.ticker_growth)- margin.top
               }
             })
-            .attr("width", 14)
+            .attr("width", 20)
             .attr("height", (d) =>( Math.abs(yScale(d.ticker_growth) - yScale(d.spy_growth) )))
             .attr("fill", (d)=>{
               if(d.alpha <0){
-                return "red"
+                // return transactionColorMap['Sale (Partial)']
+                return "#EB5542"
               }else{
-                return "green"
+                // return transactionColorMap.Purchase
+                return "#69b3a2"
               }
             })
             .style("opacity", 0)
@@ -250,9 +263,7 @@ const StockGraphSvg = ({
               .raise()
               .transition(100)
               .style("opacity", 1)
-              // .style("background-color","#819FFF" )
-              // .style("color","#819FFF" )
-              // .style("backgroundColor","#819FFF" )
+              // .style("backgroundColor","green" )
 
               d3.select("#tooltipText")
               .text(d.target.id)
@@ -290,12 +301,11 @@ const StockGraphSvg = ({
         .attr("d", lineSpy)
         .attr("fill", "none")
         .attr("stroke", "blue")
+        .attr("stroke", lineColorMap.spyLine)
         .attr("stroke-width", 3)
         .lower()
       }
-  
 
-     
 
       const transactionColorMap={
         'Purchase': "#69b3a2", 
@@ -303,7 +313,7 @@ const StockGraphSvg = ({
         'Sale (Full)': "#D43141",
         'Exchange' : "grey"
       }
-
+  
 
         svgEl
         .append('g')
