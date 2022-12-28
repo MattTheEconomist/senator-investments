@@ -1,3 +1,12 @@
+:root{
+  --darkBlue: #2979A3; 
+  --lightBlue:  #48B7F0; 
+  --myOrange: #F07F55; 
+  --myGreen: #49A35E; 
+  --backgroundBlue:rgba(72, 184, 240, 0.213); 
+}
+
+
 .singleSenatorContainer{
   text-align: center;
 
@@ -14,37 +23,90 @@
 /* trades table */
 
 :root{
-  --cellWidth: 165px; 
+  /* --cellWidth: 165px;  */
+  --cellWidth: 175px; 
+  --headerWidth: 170px; 
+}
+
+#allTradeTableRows{
+  margin-left: 2em; 
 }
 
 #tradesTableHeaders{
-  display: table;
-    /* width: 500px; Optional */
+    table-layout: fixed; 
+    margin-left: 2em; 
+    margin-bottom: 1em;
+    display: flex; 
+    flex-direction: row;
 
-    table-layout: fixed; /*Optional*/
-    border-spacing: 10px; /*Optional*/
-    /* background-color: red; Optional */
 }
 .tradeTableHeader{
   display: table-cell;
   width:var(--cellWidth); 
+  padding-top: 2px;
+  background-color: aquamarine;
+  border: 1px solid black;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+
 }
 
 
+.headerTextContainer{
+
+
+}
+
+.headerOrderBtn{
+  /* background-color: #F07F55; */
+  margin-left: 0.5em;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid #F07F55;;
+}
+
+.btnDescending{
+  transition: 0.5s; 
+  transform: rotate(180deg);
+}
+
+.focusedColumn{
+  border-bottom: 20px solid green;;
+}
+
 .singleTableRow{
   display: table;
-  table-layout: fixed; /*Optional*/
+  table-layout: fixed; 
 
 }
 
 .tradesTableCell{
   width:var(--cellWidth); 
   display: table-cell;
+  text-align: center;
+  border-top: 1px solid black; 
+  padding-top: 2px; 
+  padding-bottom: 2px; 
+
 }
 
 #shadedRow{
-  background-color: rgb(158, 153, 153);
+  transition: ease-in-out 0.3s; 
+  background-color: var( --lightBlue);
+  border-bottom: 1.5px solid black;
+  border-top: 1.5px solid black;
+
 }
+
+
+
 
 
 

@@ -9,11 +9,12 @@ const TradesTable = ({ tradeData, isFetching,
 }) => {
   const [tradeDataOrdered, setTradeDataOrdered] = useState([]);
   const [reorderTrigger, setReorderTrigger] = useState(false);
+  const [focusColumn, setFocusColumn] = useState("transaction_date")
 
   useEffect(() => {
     setTradeDataOrdered(tradeData);
     setReorderTrigger(false);
-    console.log("trades table:", nameSelected)
+    // console.log("trades table:", nameSelected)
   }, [isFetching, tradeData, reorderTrigger]);
   // }, []);
 
@@ -98,9 +99,10 @@ const TradesTable = ({ tradeData, isFetching,
       );
     }
 
-
+    setFocusColumn(header)
 
     setTradeDataOrdered(rez);
+
   }
 
   const tableHeaderList = [
@@ -135,6 +137,8 @@ const TradesTable = ({ tradeData, isFetching,
         headerText={el.headerText}
         columnValue={el.columnValue}
         reOrderByHeader={reOrderByHeader}
+        focusColumn={focusColumn}
+        setIsFocusedColumn={setFocusColumn}
       />
     );
   });
