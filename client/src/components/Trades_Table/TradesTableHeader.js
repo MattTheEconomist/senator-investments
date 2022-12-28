@@ -17,13 +17,19 @@ const TableHeader = ({ headerText, columnValue, reOrderByHeader,
 
   }
 
+  
+
 
   
   let buttonClasses = "headerOrderBtn"
 
   isAscending? buttonClasses += " btnAscending": buttonClasses +=" btnDescending"
 
-  focusColumn===columnValue? buttonClasses += " focusedColumn": buttonClasses += " notFocusedColumn" 
+
+  const isFocused = focusColumn===columnValue? true:false
+
+
+  isFocused? buttonClasses += " focusedColumn": buttonClasses += " notFocusedColumn" 
 
 
 
