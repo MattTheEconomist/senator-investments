@@ -72,6 +72,11 @@ const RowExpansion = ({    sequence,
     setIsFetchingStockData(true);
 const endpoint = `http://localhost:5001/historical/${ticker}/${transaction_date}/${senatorId}`;
 
+    if(ticker.includes(".")){
+      // console.log('row expansion', stockData)
+      return "hi"
+    }
+
       try{
 
         fetch(endpoint)
@@ -124,7 +129,7 @@ const graphIndex=(
 
 
 function minimizeRow(){
-  console.log("clikk")
+  // console.log("clikk")
   setRowSequenceClicked(-2)
 }
 

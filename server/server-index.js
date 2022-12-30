@@ -11,7 +11,28 @@ app.use(cors());
 
 app.use(express.json());
 
+
+// const apiRouter = express.Router();
+
+
+// const senatorPageRouter = require('./senatorId')
+
+// apiRouter.use('/senatorId', senatorPageRouter );
+
+// module.exports = apiRouter
+
+
+
+
 // ROUTES//
+app.get('/senatorprofile/:senatorName', function (req, res) {
+
+  // req.params.id will contain the user id
+  const senatorName = req.params.senatorName
+
+  // retrieve the user with that id and render their profile page
+});
+
 
 //trade query
 app.get("/trades", async (req, res) => {
@@ -32,6 +53,12 @@ app.get("/trades", async (req, res) => {
       let currentValue = values.pop();
 
       let filterCriteria = ` WHERE ${currentColumn}=${currentValue}`;
+
+      // if (currentColumn==='senatorId'){
+      //   currentColumn='"senatorId"'
+      // }
+
+
 
       while (columns.length >= 1) {
         let currentColumn = columns.pop();

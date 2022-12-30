@@ -4,9 +4,9 @@
 :root{
   --darkBlue: #2979A3; 
   --lightBlue:  #48B7F0; 
-  --myOrange: #F2B185; 
+  --myOrange: #F07F55; 
   --blueGrey: #60668A; 
-  /* --myGreen: #49A35E;  */
+  --myGreen: #49A35E; 
   --backgroundBlue:rgba(72, 184, 240, 0.213); 
   --lightGrey:  #c7ced2; 
   --datShadow: rgba(0, 0, 0, 0.16) 0px 0px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -219,7 +219,7 @@
       width : 100px;
       height : 52px;
       /* background-color: red; */
-      background-color: #F0A548;
+      background-color: #66CCFF;
       border-radius: 30px;
       border: 2px solid grey;
       /* border: 2px solid var(--lightGrey); */
@@ -254,8 +254,7 @@
          
   /* Checkbox checked toggle label bg color */
   .checkbox:checked + .toggle {
-      /* background-color: #2178A3; */
-      background-color: #66CCFF;
+      background-color: var(--myOrange)
   }
          
   /* Checkbox vanished */

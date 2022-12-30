@@ -5,21 +5,16 @@ const TableHeader = ({ headerText, columnValue, reOrderByHeader,
    focusColumn, setFocusColumn
    }) => {
   const [isAscending, setIsAscending] = useState(true);
-  // const [isFocusedColumn, setIsFocusedColumn] = useState(false)
 
-  // let tableAscending = true;
 
   function orderTable() {
     setIsAscending(!isAscending);
-    // setIsFocusedColumn(true)
     reOrderByHeader(columnValue, isAscending);
-    console.log("clicked button", columnValue)
+    // console.log("clicked button", columnValue)
 
   }
 
   
-
-
   
   let buttonClasses = "headerOrderBtn"
 
@@ -29,11 +24,12 @@ const TableHeader = ({ headerText, columnValue, reOrderByHeader,
   const isFocused = focusColumn===columnValue? true:false
 
 
-  isFocused? buttonClasses += " focusedColumn": buttonClasses += " notFocusedColumn" 
+  isFocused? buttonClasses += " focusedColumn": buttonClasses += " notFocusedColumn"
+  
 
-
-
-
+  if(!isFocused){
+    buttonClasses=buttonClasses.replace(" btnAscending", " btnDescending")
+  }
 
 
   return (

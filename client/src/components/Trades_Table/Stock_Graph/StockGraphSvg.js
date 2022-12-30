@@ -23,12 +23,19 @@ const StockGraphSvg = ({
  useEffect(()=>{
   cleanupOldGraph()
   drawGraph(stockData, isGrowthData)
+
+  if(stockData.length ===0){
+    d3.select("#tooltipNew").style("opacity", 0)
+  }
+
  }, [stockData])
 
 
   useEffect(()=>{
     cleanupOldGraph()
     drawGraph(stockData, isGrowthData)
+
+
 
 
   }, [isGrowthData])
@@ -95,6 +102,8 @@ const StockGraphSvg = ({
     }
 
   let formattedData = processStockData(stockData, transaction_date);
+
+  console.log("stock data", formattedData)
 
   // if(formattedData.length > 0){
   if(formattedData){
