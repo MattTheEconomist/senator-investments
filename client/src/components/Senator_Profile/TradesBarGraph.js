@@ -27,7 +27,7 @@ const TradesBarGraph = ({senatorData,  isFetching})=>{
         margin: { top: 50, right: 30, bottom: 50, left: 60 },
       };
     
-      const svgRef = useRef(null);
+    //   const svgRef = useRef(null);
     
       const { width, height, margin } = dimensions;
       const svgWidth = width + margin.left + margin.right;
@@ -174,7 +174,9 @@ const TradesBarGraph = ({senatorData,  isFetching})=>{
 
     return (<div id="tradesBarGraphContainer">
         <p>trades bar graph container</p>
-        <svg ref={svgRef} width={svgWidth} height={svgHeight} id="transactionsBarGraphSvg"></svg>
+        <svg 
+        // ref={svgRef}
+         width={svgWidth} height={svgHeight} id="transactionsBarGraphSvg"></svg>
     </div>
 
     )       

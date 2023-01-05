@@ -48,7 +48,9 @@ const StockGraphSvg = ({
     margin: { top: 50, right: 30, bottom: 50, left: 60 },
   };
 
-  const svgRef = useRef(null);
+  // const svgRef = useRef(null);
+
+
 
   const { width, height, margin } = dimensions;
   const svgWidth = width + margin.left + margin.right;
@@ -360,7 +362,9 @@ const StockGraphSvg = ({
         <div id="tooltipText"></div>
        </div>
 
-        <svg ref={svgRef} width={svgWidth} height={svgHeight} id="stockGraphSvg"
+        <svg 
+        // ref={svgRef} 
+        width={svgWidth} height={svgHeight} id="stockGraphSvg"
         >
 
 </svg>

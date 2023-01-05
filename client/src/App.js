@@ -1,13 +1,37 @@
 // import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter, Route, Routes, Link , Outlet} from 'react-router-dom';
 import SingleSenator from "./components/SingleSenator";
+import HomePageOutter from "./components/Home Page Folder/HomePageOutter"
+
+import ProfilePage from "./components/Home Page Folder/ProfilePage";
 
 function App() {
+
   return (
-    <div className="app">
-      <SingleSenator />
-    </div>
+  <BrowserRouter> 
+     {/* <div className="app">  */}
+     <div>
+     <Routes>
+     <Route exact path="/home" element={<HomePageOutter />} />
+
+     <Route exact path="/profilePage/:userId" index element={<ProfilePage />} />
+
+     </Routes>
+
+
+
+     </div> 
+
+     <Outlet /> 
+
+
+ </BrowserRouter>
+
   );
 }
 
 export default App;
+
+
+

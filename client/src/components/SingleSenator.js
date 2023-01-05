@@ -6,10 +6,13 @@ import SenatorProfileOutter from "./Senator_Profile/SenatorProfileOutter";
 
 // const promise = fetchSenatorData(senatorName);
 
-const SingleSenator = () => {
+// const SingleSenator = () => {
+const SingleSenator = ({match}) => {
+
+  const {senId} = match.params 
+
   const [senatorData, setSenatorData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  //  const [nameSelected, setNameSelected] = useState("'Sheldon Whitehouse'");
    const [nameSelected, setNameSelected] = useState("'Thomas H Tuberville'");
   //  const [nameSelected, setNameSelected] = useState("100");
 
