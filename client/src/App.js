@@ -16,6 +16,7 @@ function App() {
      <Route exact path="/home" element={<HomePageOutter />} />
 
      <Route exact path="/profilePage/:userId" index element={<ProfilePage />} />
+     <Route exact path="/senatorProfile/:senatorId" index element={<SingleSenator />} />
 
      </Routes>
 

@@ -125,6 +125,34 @@
 
 
 
+/* TOP senators table */
+
+#topSenatorTable_Outter{
+  margin-left: 3em; 
+}
+
+#topSenatorTable_Header{
+    display:flex ; 
+  flex-direction: row; 
+}
+
+
+.topSenatorsRow{
+  display:flex ; 
+  flex-direction: row; 
+}
+
+
+.topSenatorsNameCell{
+ width: 12em; 
+ height: 1em; 
+}
+
+.topSenatorsPurchCell{
+  width: 10em; 
+  height: 1.5em; 
+}
+
 
 
 

@@ -9,7 +9,6 @@ import {useParams, Link} from "react-router-dom";
         const params = useParams()
         const userId = params.userId
 
-
   
     return (
 

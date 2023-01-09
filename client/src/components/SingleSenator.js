@@ -1,56 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import TradesTable from "./Trades_Table/TradesTable";
 import NameDropdown from "./NameDropdown";
 import SenatorProfileOutter from "./Senator_Profile/SenatorProfileOutter";
 
-// const promise = fetchSenatorData(senatorName);
+import {useParams, Link} from "react-router-dom";
 
-// const SingleSenator = () => {
-const SingleSenator = ({match}) => {
+const SingleSenator = () => {
 
-  const {senId} = match.params 
+
+  const params = useParams()
+  const senatorId = params.senatorId
+
 
   const [senatorData, setSenatorData] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-   const [nameSelected, setNameSelected] = useState("'Thomas H Tuberville'");
-  //  const [nameSelected, setNameSelected] = useState("100");
+   const [nameSelected, setNameSelected] = useState("");
+  //  const [senatorIdSelected, setSenatorIdSelected] = useState(senatorId)
 
 
-  async function fetchSenatorData(senatorNameFetch) {
 
-    const senatorIdString = `${senatorNameFetch}`
+   useEffect(()=>{
+    fetchSenatorData(senatorId)
+   },[])
+
+
+
+
+  async function fetchSenatorData(idSelect) {
 
     setIsFetching(true);
     try {
-      const fetchString = `http://localhost:5001/trades?senator=${senatorNameFetch}&type='Purchase'`;
-      // const fetchString = `http://localhost:5001/trades?senatorId=${senatorNameFetch}&type='Purchase'`;
-      // const fetchString = `http://localhost:5001/trades?senator_id=${senatorIdString}&type='Purchase'`;
+      const fetchString = `http://localhost:5001/trades?senator_id='${idSelect}'&type='Purchase'`; 
       const response = await fetch(fetchString);
       const jsonData = await response.json();
       setSenatorData(jsonData);
-      setIsFetching(false);      
-      // console.log('single senator', senatorNameFetch)
-      // console.log('single senator', senatorData)
+      setIsFetching(false);   
+
+
+        setNameSelected(jsonData[0].senator)
 
     } catch (error) {
       console.error(error);
     }
-    finally{
-
-    }
+  
   }
 
   return (
     <>
-      <NameDropdown
-        senatorData={senatorData}
-        isFetching={isFetching}
-        fetchSenatorData={fetchSenatorData}
-        nameSelected = {nameSelected}
-        setNameSelected = {setNameSelected}
-      />
-      <SenatorProfileOutter nameSelected = {nameSelected} senatorData={senatorData} isFetching={isFetching}/>
+        <Link to="/home">Home</Link>
+
+      <SenatorProfileOutter nameSelected = {nameSelected} 
+      senatorData={senatorData} isFetching={isFetching}/>
       <TradesTable tradeData={senatorData} 
       isFetching={isFetching} 
       nameSelected = {nameSelected}
