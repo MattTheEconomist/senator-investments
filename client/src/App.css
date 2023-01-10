@@ -5,6 +5,10 @@
   --myGreen: #49A35E; 
   --backgroundBlue:rgba(72, 184, 240, 0.213); 
   --lightGrey:  #c7ced2; 
+  --cellWidth: 175px; 
+  --headerWidth: 170px; 
+
+  /* --cellWidth_top:  */
 
 }
 
@@ -24,11 +28,6 @@
 
 /* trades table */
 
-:root{
-  /* --cellWidth: 165px;  */
-  --cellWidth: 175px; 
-  --headerWidth: 170px; 
-}
 
 #allTradeTableRows{
   margin-left: 2em; 
@@ -59,8 +58,6 @@
   --lightBlue:  #48B7F0;  */
 
   background-color: var(--lightBlue);
-  /* background-color: var(--darkBlue); */
-  /* border-top: 2px solid black; */
   border-bottom: 2px solid black;
   text-align: center;
   display: flex;
@@ -124,37 +121,216 @@
 }
 
 
+:root{
+  --topCellWidthName: 12em;
+  --topCellWidthPurch: 10em ; 
+  --topRowWidth: 22em;  
+  --overallMarignLeft: 10%; 
+  --backgroundBlue:rgba(72, 184, 240, 0.213); 
+}
 
-/* TOP senators table */
+/* HOME PAGE OUTTER */
+
+#homePageContentOutter{
+  background-color: var(--backgroundBlue);
+  padding-top: 0.5em; 
+  margin-top: 1em;
+}
+
+.homePageTextContainer{
+  background-color: white;
+}
+
 
 #topSenatorTable_Outter{
-  margin-left: 3em; 
+  /* margin-left: 3em;  */
+  margin-left:  var(--overallMarignLeft)
 }
+
+
 
 #topSenatorTable_Header{
     display:flex ; 
   flex-direction: row; 
+
+   padding-top: 2px;
+  background-color: var(--lightBlue);
+  border-bottom: 2px solid black;
+  text-align: center;
+  width: var(--topRowWidth); 
+}
+
+#topSenatorsName_Header{
+ width: var(--topCellWidthName)
+}
+
+#topSenatorsPurch_Header{
+background-color: var(--lightBlue);
+}
+
+
+.senProfileLink{
+  text-decoration: none;
 }
 
 
 .topSenatorsRow{
   display:flex ; 
   flex-direction: row; 
+  border-bottom: 1px solid black;
+  width: var(--topRowWidth); 
+  /* justify-content: middle; */
+  padding-top: 0.1em;
+  background-color: white;
+
+}
+
+.topSenatorsRow:hover{
+  background-color: var( --lightGrey)
 }
 
 
 .topSenatorsNameCell{
  width: 12em; 
  height: 1em; 
+ text-align: center;
+ /* background-color: red;  */
 }
 
 .topSenatorsPurchCell{
   width: 10em; 
   height: 1.5em; 
+  text-align: center;
+
+}
+
+#titleContainer{
+  /* background-color: green; */
+  background-image: linear-gradient(to right, var(--lightBlue),var(--darkBlue));
+  width: 50vw; 
+  padding-top: .3em;
+  padding-bottom: .3em;
+  margin-top: 1em; 
+  text-align: center;
+	/* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+	background-size: 200% 200%;
+	/* height: 100vh; */
+  border-radius: 10px;
+  margin-left:  var(--overallMarignLeft)
+}
+
+#titleText{}
+
+#firstTextContainer{
+
+  width: 60vw;
+  text-align: center;
+  margin-left: 3em; 
+  margin-top: 2em; 
+  margin-bottom: 2em; 
+  border-radius: 10px;
+  padding: 1em; 
+  border: 1px solid black;  
+  /* margin-left: 25%; */
+  /* margin-left:  var(--overallMarignLeft) */
+  margin-left: 10vh;
+
+}
+
+#topTableAndTextContainer{
+  /* background-color: teal; */
+  width: 65em; 
+  display: flex;
+  flex-direction: row; 
+}
+#explanatoryTextContainer{
+  width: 25em;
+  /* background-color: blue; */
+  border: 1px solid black;
+  border-radius: 10px; 
+  margin-left: 2em; 
+  margin-top: 0.5em;
+  padding: 1.5em; 
+}
+.questionText{
+  font-weight: bold;
+}
+
+.boldText{
+  font-weight: bold; 
+  color: var(--darkBlue)
 }
 
 
+#homePageSummaryInfo{
+  width: 60em;
+  /* height: 15em; */
+  padding-bottom: 2em;
+  margin-top: 2em;
+  margin-left: 10vh;
+  border: 1px solid black; 
+  border-radius: 10px ;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
 
+#leaderboardCardsContainer{
+  display: flex;
+  flex-direction: row;
+}
+
+.summaryStatsCard{
+  /* background-color: var(--lightGrey); */
+  margin-left: 1em; 
+  /* font-size: ; */
+  border: 1px solid grey;
+  border-radius: 5px ;
+  padding-bottom: 1em; 
+  /* padding-right: 1em; 
+  padding-left: 1em;  */
+  text-align: center;
+}
+
+.statsCardTitle{
+  font-size: large;
+  font-weight: bold;
+  background-color: var(--myGreen);
+  height: 1.75em; 
+  padding-top: 0.2em;
+  color: white
+}
+
+.statsInfoContainer{
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+
+#homePageFooter{
+  width: 100em;
+  /* width: 100vh; */
+  height: 7em;
+  /* background-image: linear-gradient(to right, var(--lightBlue),var(--darkBlue)); */
+  background-color: var(--darkBlue);
+  margin-top: 2em ;
+  text-align: center;
+  padding-top: 1em;
+}
+
+#homePageFooterText{
+  color: white
+}
+
+.footerLink{
+  /* color: white */
+  color: var(  --myOrange)
+}
+
+#homePageFooterTextContainer{
+  width: 75em;
+}
 
 
 
