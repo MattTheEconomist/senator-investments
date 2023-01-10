@@ -2,6 +2,8 @@
 // import React from "react";
 import { useEffect, useState } from "react";
 
+import LeaderboardCard from "./LeaderBoardCard";
+
 
 import { Link, Outlet } from 'react-router-dom';
 
@@ -93,30 +95,13 @@ const HomePageOutter = ()=> {
 <div id="homePageSummaryInfo" className="homePageTextContainer">
 
 <h1 id="leaderboardTitle">Leaderboard</h1>
+
+
       <div id="leaderboardCardsContainer">
-      <div className="summaryStatsCard">
-        <div className="statsCardTitle">Highest Alpha Senator</div>
-        <div className="statsInfoContainer">
-        <p className="statsCardInfo">William Cassidy, mean alpha 10.15</p>
 
-        </div>
-      </div>
-
-      <div className="summaryStatsCard">
-        <div className="statsCardTitle">Most Traded Stock </div>
-        <div className="statsInfoContainer">
-        <p className="statsCardInfo">XOM, 50 transactions </p>
-        </div>
-
-      </div>
-
-
-      <div className="summaryStatsCard">
-        <div className="statsCardTitle">Best Trade </div>
-        <div className="statsInfoContainer">
-        <p className="statsCardInfo">Thomas Carper, SI, 11/20/2020,  alpha: 450! </p>
-        </div>
-      </div>
+      <LeaderboardCard cardId={'highestAlphaSen'}/>
+      <LeaderboardCard cardId={'mostTradedStock'}/>
+      <LeaderboardCard cardId={'bestTrade'}/>
 
 
       </div>
@@ -127,7 +112,7 @@ const HomePageOutter = ()=> {
 
 <div id="homePageFooter">
     <div id="homePageFooterTextContainer">
-    <p id="homePageFooterText">This app was created by me, Matt Ashford.  For more information no how this was built, please see <a href="https://github.com/MattTheEconomist/senator-investments" target="_blank" className="footerLink">its github repo</a>. All data (senators, transactions, historical stock prices) is housed within the app. For more information on the exploratory data analysis and ETL please see <a href="https://github.com/MattTheEconomist/Senator-Investments-ETL" target="_blank" className="footerLink">this other github repo</a></p>
+    <p id="homePageFooterText">This app was created by me, Matt Ashford.  For more information no how this was built, please see <a href="https://github.com/MattTheEconomist/senator-investments" target="_blank" className="footerLink">its github repo</a>. All data (senators, transactions, historical stock prices) is housed within the app. For more information on the exploratory data analysis and the ETL please see <a href="https://github.com/MattTheEconomist/Senator-Investments-ETL" target="_blank" className="footerLink">this other github repo</a>.</p>
     </div>
 
 
