@@ -105,7 +105,8 @@ const StockGraphSvg = ({
 
   let formattedData = processStockData(stockData, transaction_date);
 
-  console.log("stock data", formattedData)
+  // console.log("stock data", formattedData)
+  console.table(formattedData)
 
   // if(formattedData.length > 0){
   if(formattedData){

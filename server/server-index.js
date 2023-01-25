@@ -25,14 +25,6 @@ app.use(express.json());
 
 
 // ROUTES//
-app.get('/senatorprofile/:senatorName', function (req, res) {
-
-  // req.params.id will contain the user id
-  const senatorName = req.params.senatorName
-
-  // retrieve the user with that id and render their profile page
-});
-
 
 //trade query
 app.get("/trades", async (req, res) => {
@@ -53,11 +45,6 @@ app.get("/trades", async (req, res) => {
       let currentValue = values.pop();
 
       let filterCriteria = ` WHERE ${currentColumn}=${currentValue}`;
-
-      // if (currentColumn==='senatorId'){
-      //   currentColumn='"senatorId"'
-      // }
-
 
 
       while (columns.length >= 1) {
@@ -227,9 +214,41 @@ app.get("/senators-unique", async (req, res) => {
  
     const senatorInfo = await pool.query(
       "SELECT * from senator_info"
+
+  
     );
     res.json(senatorInfo.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
+
+app.get("/senators-top", async (req, res) => {
+  try {
+ 
+    const senatorInfo = await pool.query(
+      `select senator, senator_id, count(*) as purchases
+      from transactions 
+      where type='Purchase'
+      group by senator, senator_id
+      having count(*) > 2
+      order by purchases desc `
+    );
+    res.json(senatorInfo.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+app.get("/summary-stats", async (req, res) => {
+  try {
+ 
+    const senatorInfo = await pool.query(
+      `select * from summary_stats;`
+    );
+    res.json(senatorInfo.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
