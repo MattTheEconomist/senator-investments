@@ -4,12 +4,30 @@ import OverallAlphaCard from "./OverallAlphaCard";
 import SenatorInfoCard from "./SenatorInfoCard";
 import  TradesBarGraph from "./TradesBarGraph";
 import ExecutorGraphCard from "./ExecutorGraphCard"
+
+
+
 import './Senator_Profile.css'
 
 
 const SenatorProfileOutter = ({nameSelected, senatorData, isFetching})=>{
+
+
+    const [senId, setSenId] = useState('')
+
+    useEffect(()=>{
+        if(senatorData && senatorData.length> 0){
+        setSenId(senatorData[0].senator_id)
+
+        }
+    }, [senatorData])
+   
     let nameSelectedFormatted = nameSelected.replace("'","")
      nameSelectedFormatted = nameSelectedFormatted.replace("'","")
+
+    //  console.table(senatorData)
+
+    
 
 
 
@@ -17,11 +35,14 @@ const SenatorProfileOutter = ({nameSelected, senatorData, isFetching})=>{
     return ( <div id="senatorProfileOutter">
         <div id="senatorNameTitleContainer">
 
+
         <h3 id="senatorNameTitle">{nameSelectedFormatted}</h3>
         </div>
     <div id="allCardsContainer">
 
-        <SenatorInfoCard senatorData={senatorData} isFetching={isFetching}/>
+
+        <SenatorInfoCard senId={senId} 
+        senatorData={senatorData} isFetching={isFetching}/>
         <OverallAlphaCard senatorData={senatorData}/>
         <ExecutorGraphCard senatorData={senatorData}/>
 
@@ -37,3 +58,5 @@ const SenatorProfileOutter = ({nameSelected, senatorData, isFetching})=>{
 }
 
 export default SenatorProfileOutter
+
+

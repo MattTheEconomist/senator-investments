@@ -7,8 +7,6 @@
 }
 
 
-
-
 #senatorProfileOutter{
     display: grid; 
     /* grid-template-rows: 40px 300px 200px; */
@@ -84,6 +82,11 @@
     margin-left: -1em; 
     padding-left: 1em;
 
+}
+
+#senatorProfileImg{
+    height: 175px; 
+    width: auto; 
 }
 
 

@@ -4,8 +4,8 @@ import * as d3 from "d3";
 export function processStockData(stockData, transaction_date){
   //handle error somehow. add something else? 
 
-  console.log("starting data")
-  console.table(stockData)
+  // console.log("starting data")
+  // console.table(stockData)
 
 
 
@@ -200,9 +200,9 @@ function calculateGrowthIndex(stockDataPreProcessed){
   
   }
 
-  console.log("finished data")
+  // console.log("finished data")
 
-  console.table(stockDataArray_growthIndex)
+  // console.table(stockDataArray_growthIndex)
 
   return stockDataArray_growthIndex 
 
