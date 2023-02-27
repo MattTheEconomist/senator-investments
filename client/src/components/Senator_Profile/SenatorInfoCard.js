@@ -6,15 +6,9 @@ import './Senator_Profile.css'
 
 const SenatorInfoCard = ({senatorData,  isFetching, senId})=>{
 
-    const [infoObject, setInfoObject] = useState({})
-    // const [imageFileName, setImageFileName] = useState('')
     const [thing, setThing] = useState(null)
 
 
-    // useEffect(()=>{
-    //     setThing(loadImg(senId))
-    //     console.log(thing)
-    // }, [isFetching, senId, senatorData])
 
     const imgObject = {
         '136' : require('../../SenatorImages/136.jpeg'), 
@@ -46,7 +40,7 @@ const SenatorInfoCard = ({senatorData,  isFetching, senId})=>{
         try {
             if(senId){
             const imagePath  = imgObject[senId]
-            console.log('img path is ', imagePath)
+            // console.log('img path is ', imagePath)
             return <img 
             id="senatorProfileImg"
             src={imgObject[senId]}></img>
@@ -57,38 +51,19 @@ const SenatorInfoCard = ({senatorData,  isFetching, senId})=>{
     }
 
 
-    console.log(loadImg(senId))
 
 // javascript to load a local image if the file exists 
 
     const senatorImage  = loadImg(senId)
 
 
-    function processSenatorData(rawData){
-        let infoObjectLocal = {}
-            if(rawData.length > 0){
-                const totalTransactions = rawData.length
-                infoObjectLocal['Total Purchases'] = totalTransactions
-        
-                const mostRecentTransaction  = rawData[0].transaction_date
-                infoObjectLocal['Most Recent Purchase'] = mostRecentTransaction   
-            }       
 
-        setInfoObject(infoObjectLocal)
-    }
-
-
-
-
-    const infoCardData = Object.keys(infoObject).map((currentKey, idx)=><p
-    key={`senatorInfo_${idx}`}
-    >{`${currentKey}: ${infoObject[currentKey]}`}</p>)
 
     return (<div id="senatorInfoCardContainer" className="senatorProfileCard">
          <p  className="cardTitle">Trade Info</p>
 
          {senatorImage }
-        <div>{infoCardData}</div>
+        {/* <div id="senatorInfoCardData">{infoCardData}</div> */}
 
 
 
